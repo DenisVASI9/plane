@@ -391,10 +391,12 @@ export const ActiveCycleDetails: React.FC = () => {
                 </div>
               </div>
 
-              <Link href={`/${workspaceSlug}/projects/${projectId}/cycles/${cycle.id}`}>
-                <a className="bg-custom-primary text-white px-4 rounded-md py-2 text-center text-sm font-medium w-full hover:bg-custom-primary/90">
+              <Link
+                href={`/${workspaceSlug}/projects/${projectId}/cycles/${cycle.id}`}
+                className="bg-custom-primary text-white px-4 rounded-md py-2 text-center text-sm font-medium w-full hover:bg-custom-primary/90">
+                
                   View Cycle
-                </a>
+                
               </Link>
             </div>
           </div>

@@ -33,10 +33,14 @@ export const JiraGetImportDetail: React.FC = () => {
           <h3 className="font-semibold">Jira Personal Access Token</h3>
           <p className="text-sm text-custom-text-200">
             Get to know your access token by navigating to{" "}
-            <Link href="https://id.atlassian.com/manage-profile/security/api-tokens">
-              <a className="text-custom-primary underline" target="_blank" rel="noreferrer">
+            <Link
+              href="https://id.atlassian.com/manage-profile/security/api-tokens"
+              className="text-custom-primary underline"
+              target="_blank"
+              rel="noreferrer">
+              
                 Atlassian Settings
-              </a>
+              
             </Link>
           </p>
         </div>

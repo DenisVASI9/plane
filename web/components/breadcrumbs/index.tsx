@@ -47,20 +47,20 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({
 }) => (
   <>
     {link ? (
-      <Link href={link}>
-        <a
-          className={`border-r-2 border-custom-sidebar-border-200 px-3 text-sm ${
-            linkTruncate ? "truncate" : ""
-          }`}
+      (<Link
+        href={link}
+        className={`border-r-2 border-custom-sidebar-border-200 px-3 text-sm ${
+          linkTruncate ? "truncate" : ""
+        }`}>
+
+        <p
+          className={`${linkTruncate ? "truncate" : ""}${icon ? "flex items-center gap-2" : ""}`}
         >
-          <p
-            className={`${linkTruncate ? "truncate" : ""}${icon ? "flex items-center gap-2" : ""}`}
-          >
-            {icon ?? null}
-            {title}
-          </p>
-        </a>
-      </Link>
+          {icon ?? null}
+          {title}
+        </p>
+
+      </Link>)
     ) : (
       <div className={`px-3 text-sm truncate ${unshrinkTitle ? "flex-shrink-0" : ""}`}>
         <p className={`truncate ${icon ? "flex items-center gap-2" : ""}`}>

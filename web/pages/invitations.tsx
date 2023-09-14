@@ -193,11 +193,11 @@ const OnBoard: NextPage = () => {
                       Accept & Join
                     </PrimaryButton>
                     <Link href="/">
-                      <a>
-                        <SecondaryButton size="md" outline>
-                          Go Home
-                        </SecondaryButton>
-                      </a>
+
+                      <SecondaryButton size="md" outline>
+                        Go Home
+                      </SecondaryButton>
+
                     </Link>
                   </div>
                 </div>

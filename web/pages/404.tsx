@@ -26,10 +26,10 @@ const PageNotFound: NextPage = () => (
             name changed, or is temporarily unavailable.
           </p>
         </div>
-        <Link href="/">
-          <a className="block">
-            <SecondaryButton size="md">Go to Home</SecondaryButton>
-          </a>
+        <Link href="/" className="block">
+
+          <SecondaryButton size="md">Go to Home</SecondaryButton>
+
         </Link>
       </div>
     </div>

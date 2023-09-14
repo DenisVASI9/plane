@@ -136,16 +136,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
   <Menu.Item as="div">
     {({ active, close }) =>
       renderAs === "a" ? (
-        <Link href={href ?? ""}>
-          <a
-            className={`inline-block w-full select-none truncate rounded px-1 py-1.5 text-left text-custom-text-200 hover:bg-custom-background-80 ${
-              active ? "bg-custom-background-80" : ""
-            } ${className}`}
-            onClick={close}
-          >
-            {children}
-          </a>
-        </Link>
+        (<Link
+          href={href ?? ""}
+          className={`inline-block w-full select-none truncate rounded px-1 py-1.5 text-left text-custom-text-200 hover:bg-custom-background-80 ${
+            active ? "bg-custom-background-80" : ""
+          } ${className}`}
+          onClick={close}>
+
+          {children}
+
+        </Link>)
       ) : (
         <button
           type="button"

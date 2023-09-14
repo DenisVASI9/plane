@@ -51,17 +51,18 @@ export const ProfileNavbar: React.FC<Props> = ({ memberRole }) => {
     <div className="sticky -top-0.5 z-[1] md:static px-4 sm:px-5 flex items-center justify-between gap-4 bg-custom-background-100 border-b border-custom-border-300">
       <div className="flex items-center overflow-x-scroll">
         {tabsList.map((tab) => (
-          <Link key={tab.route} href={`/${workspaceSlug}/profile/${userId}/${tab.route}`}>
-            <a
-              className={`border-b-2 p-4 text-sm font-medium outline-none whitespace-nowrap ${
-                router.pathname === tab.selected
-                  ? "border-custom-primary-100 text-custom-primary-100"
-                  : "border-transparent"
-              }`}
-            >
-              {tab.label}
-            </a>
-          </Link>
+          (<Link
+            key={tab.route}
+            href={`/${workspaceSlug}/profile/${userId}/${tab.route}`}
+            className={`border-b-2 p-4 text-sm font-medium outline-none whitespace-nowrap ${
+              router.pathname === tab.selected
+                ? "border-custom-primary-100 text-custom-primary-100"
+                : "border-transparent"
+            }`}>
+
+            {tab.label}
+
+          </Link>)
         ))}
       </div>
       <ProfileIssuesViewOptions />

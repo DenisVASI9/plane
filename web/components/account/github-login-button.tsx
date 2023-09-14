@@ -43,7 +43,7 @@ export const GithubLoginButton: FC<GithubLoginButtonProps> = ({ handleSignIn }) 
     <div className="w-full flex justify-center items-center">
       <Link
         href={`https://github.com/login/oauth/authorize?client_id=${NEXT_PUBLIC_GITHUB_ID}&redirect_uri=${loginCallBackURL}&scope=read:user,user:email`}
-      >
+        legacyBehavior>
         <button className="flex w-full items-center justify-center gap-2 rounded border border-custom-border-300 p-2 text-sm font-medium text-custom-text-100 duration-300 hover:bg-custom-background-80 h-[46px]">
           <Image
             src={theme === "dark" ? githubWhiteImage : githubBlackImage}

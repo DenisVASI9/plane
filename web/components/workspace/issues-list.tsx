@@ -55,33 +55,33 @@ export const IssuesList: React.FC<Props> = ({ issues, type }) => {
                 const dateDifference = getDateDifference(new Date(date as string));
 
                 return (
-                  <Link
+                  (<Link
                     href={`/${workspaceSlug}/projects/${issue.project_id}/issues/${issue.id}`}
                     key={issue.id}
                   >
-                    <a>
-                      <div className="grid grid-cols-4 gap-2 px-3 py-2">
-                        <h5
-                          className={`flex cursor-default items-center gap-2 ${
-                            type === "overdue"
-                              ? dateDifference > 6
-                                ? "text-red-500"
-                                : "text-yellow-400"
-                              : ""
-                          }`}
-                        >
-                          {type === "overdue" && (
-                            <ExclamationTriangleIcon className="h-3.5 w-3.5" />
-                          )}
-                          {dateDifference} {dateDifference > 1 ? "days" : "day"}
-                        </h5>
-                        <h5 className="col-span-2">{truncateText(issue.name, 30)}</h5>
-                        <h5 className="cursor-default">
-                          {renderShortDateWithYearFormat(new Date(date?.toString() ?? ""))}
-                        </h5>
-                      </div>
-                    </a>
-                  </Link>
+
+                    <div className="grid grid-cols-4 gap-2 px-3 py-2">
+                      <h5
+                        className={`flex cursor-default items-center gap-2 ${
+                          type === "overdue"
+                            ? dateDifference > 6
+                              ? "text-red-500"
+                              : "text-yellow-400"
+                            : ""
+                        }`}
+                      >
+                        {type === "overdue" && (
+                          <ExclamationTriangleIcon className="h-3.5 w-3.5" />
+                        )}
+                        {dateDifference} {dateDifference > 1 ? "days" : "day"}
+                      </h5>
+                      <h5 className="col-span-2">{truncateText(issue.name, 30)}</h5>
+                      <h5 className="cursor-default">
+                        {renderShortDateWithYearFormat(new Date(date?.toString() ?? ""))}
+                      </h5>
+                    </div>
+
+                  </Link>)
                 );
               })
             ) : (

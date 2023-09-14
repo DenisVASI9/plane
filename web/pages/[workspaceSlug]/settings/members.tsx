@@ -233,16 +233,16 @@ const MembersSettings: NextPage = () => {
                         )}
                         <div>
                           {member.member ? (
-                            <Link href={`/${workspaceSlug}/profile/${member.memberId}`}>
-                              <a className="text-sm">
-                                <span>
-                                  {member.first_name} {member.last_name}
-                                </span>
-                                <span className="text-custom-text-300 text-sm ml-2">
-                                  ({member.display_name})
-                                </span>
-                              </a>
-                            </Link>
+                            (<Link href={`/${workspaceSlug}/profile/${member.memberId}`} className="text-sm">
+
+                              <span>
+                                {member.first_name} {member.last_name}
+                              </span>
+                              <span className="text-custom-text-300 text-sm ml-2">
+                                ({member.display_name})
+                              </span>
+
+                            </Link>)
                           ) : (
                             <h4 className="text-sm">{member.display_name || member.email}</h4>
                           )}

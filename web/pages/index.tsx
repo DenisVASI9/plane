@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import Image from "next/image";
 
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 
 // layouts
 import DefaultLayout from "layouts/default-layout";
@@ -29,6 +29,8 @@ import { useMobxStore } from "lib/mobx/store-provider";
 // next themes
 import { useTheme } from "next-themes";
 import { IUser } from "types";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 // types
 type EmailPasswordFormValues = {
@@ -36,6 +38,12 @@ type EmailPasswordFormValues = {
   password?: string;
   medium?: string;
 };
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const HomePage: NextPage = observer(() => {
   const store: any = useMobxStore();

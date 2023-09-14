@@ -20,6 +20,8 @@ import { SITE_TITLE } from "constants/seo-variables";
 // mobx store provider
 import { MobxStoreProvider } from "lib/mobx/store-provider";
 import MobxStoreInit from "lib/mobx/store-init";
+//locales
+import { appWithTranslation } from 'next-i18next'
 
 const CrispWithNoSSR = dynamic(() => import("constants/crisp"), { ssr: false });
 
@@ -48,4 +50,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation<any>(MyApp);

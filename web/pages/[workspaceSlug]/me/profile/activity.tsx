@@ -127,10 +127,9 @@ const ProfileActivity = () => {
                       created{" "}
                       <Link
                         href={`/${workspaceSlug}/projects/${activityItem.project}/issues/${activityItem.issue}`}
-                      >
-                        <a className="inline-flex items-center hover:underline">
-                          this issue. <ArrowTopRightOnSquareIcon className="ml-1 h-3.5 w-3.5" />
-                        </a>
+                        className="inline-flex items-center hover:underline">
+                        this issue.<ArrowTopRightOnSquareIcon className="ml-1 h-3.5 w-3.5" />
+
                       </Link>
                     </span>
                   ) : activityItem.field ? (
@@ -195,13 +194,13 @@ const ProfileActivity = () => {
                                     {activityItem.actor_detail.first_name} Bot
                                   </span>
                                 ) : (
-                                  <Link
+                                  (<Link
                                     href={`/${workspaceSlug}/profile/${activityItem.actor_detail.id}`}
-                                  >
-                                    <a className="text-gray font-medium">
-                                      {activityItem.actor_detail.display_name}
-                                    </a>
-                                  </Link>
+                                    className="text-gray font-medium">
+
+                                    {activityItem.actor_detail.display_name}
+
+                                  </Link>)
                                 )}{" "}
                                 {message}{" "}
                                 <span className="whitespace-nowrap">

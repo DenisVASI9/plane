@@ -220,8 +220,8 @@ export const WorkspaceSidebarDropdown = () => {
                   as="div"
                   className="flex w-full items-center justify-start rounded px-2 py-1 text-sm text-custom-sidebar-text-200 hover:bg-custom-sidebar-background-80"
                 >
-                  <Link href={link.href}>
-                    <a className="w-full">{link.name}</a>
+                  <Link href={link.href} className="w-full">
+                    {link.name}
                   </Link>
                 </Menu.Item>
               ))}
@@ -264,11 +264,13 @@ export const WorkspaceSidebarDropdown = () => {
                 {profileLinks(workspaceSlug?.toString() ?? "", user?.id ?? "").map(
                   (link, index) => (
                     <Menu.Item key={index} as="button" type="button">
-                      <Link href={link.link}>
-                        <a className="flex w-full items-center gap-2 rounded px-2 py-1 hover:bg-custom-sidebar-background-80">
-                          <Icon iconName={link.icon} className="!text-lg !leading-5" />
-                          {link.name}
-                        </a>
+                      <Link
+                        href={link.link}
+                        className="flex w-full items-center gap-2 rounded px-2 py-1 hover:bg-custom-sidebar-background-80">
+
+                        <Icon iconName={link.icon} className="!text-lg !leading-5" />
+                        {link.name}
+
                       </Link>
                     </Menu.Item>
                   )

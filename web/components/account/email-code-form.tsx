@@ -111,105 +111,103 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
     };
   }, [handleSubmit, codeSent]);
 
-  return (
-    <>
-      {(codeSent || codeResent) && (
-        <p className="text-center mt-4">
-          We have sent the sign in code.
-          <br />
-          Please check your inbox at <span className="font-medium">{watch("email")}</span>
-        </p>
-      )}
-      <form className="space-y-4 mt-10 sm:w-[360px] mx-auto">
-        <div className="space-y-1">
+  return <>
+    {(codeSent || codeResent) && (
+      <p className="text-center mt-4">
+        We have sent the sign in code.
+        <br />
+        Please check your inbox at <span className="font-medium">{watch("email")}</span>
+      </p>
+    )}
+    <form className="space-y-4 mt-10 sm:w-[360px] mx-auto">
+      <div className="space-y-1">
+        <Input
+          id="email"
+          type="email"
+          name="email"
+          register={register}
+          validations={{
+            required: "Email address is required",
+            validate: (value) =>
+              /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+                value
+              ) || "Email address is not valid",
+          }}
+          error={errors.email}
+          placeholder="Enter your email address..."
+          className="border-custom-border-300 h-[46px]"
+        />
+      </div>
+
+      {codeSent && (
+        <>
           <Input
-            id="email"
-            type="email"
-            name="email"
+            id="token"
+            type="token"
+            name="token"
             register={register}
             validations={{
-              required: "Email address is required",
-              validate: (value) =>
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-                  value
-                ) || "Email address is not valid",
+              required: "Code is required",
             }}
-            error={errors.email}
-            placeholder="Enter your email address..."
+            error={errors.token}
+            placeholder="Enter code..."
             className="border-custom-border-300 h-[46px]"
           />
-        </div>
-
-        {codeSent && (
-          <>
-            <Input
-              id="token"
-              type="token"
-              name="token"
-              register={register}
-              validations={{
-                required: "Code is required",
-              }}
-              error={errors.token}
-              placeholder="Enter code..."
-              className="border-custom-border-300 h-[46px]"
-            />
-            <button
-              type="button"
-              className={`flex w-full justify-end text-xs outline-none ${
-                isResendDisabled
-                  ? "cursor-default text-custom-text-200"
-                  : "cursor-pointer text-custom-primary-100"
-              } `}
-              onClick={() => {
-                setIsCodeResending(true);
-                onSubmit({ email: getValues("email") }).then(() => {
-                  setCodeResent(true);
-                  setIsCodeResending(false);
-                  setResendCodeTimer(30);
-                });
-              }}
-              disabled={isResendDisabled}
-            >
-              {resendCodeTimer > 0 ? (
-                <span className="text-right">Request new code in {resendCodeTimer} seconds</span>
-              ) : isCodeResending ? (
-                "Sending new code..."
-              ) : errorResendingCode ? (
-                "Please try again later"
-              ) : (
-                <span className="font-medium">Resend code</span>
-              )}
-            </button>
-          </>
-        )}
-        {codeSent ? (
-          <PrimaryButton
-            type="submit"
-            className="w-full text-center h-[46px]"
-            size="md"
-            onClick={handleSubmit(handleSignin)}
-            disabled={!isValid && isDirty}
-            loading={isLoading}
-          >
-            {isLoading ? "Signing in..." : "Sign in"}
-          </PrimaryButton>
-        ) : (
-          <PrimaryButton
-            className="w-full text-center h-[46px]"
-            size="md"
+          <button
+            type="button"
+            className={`flex w-full justify-end text-xs outline-none ${
+              isResendDisabled
+                ? "cursor-default text-custom-text-200"
+                : "cursor-pointer text-custom-primary-100"
+            } `}
             onClick={() => {
-              handleSubmit(onSubmit)().then(() => {
+              setIsCodeResending(true);
+              onSubmit({ email: getValues("email") }).then(() => {
+                setCodeResent(true);
+                setIsCodeResending(false);
                 setResendCodeTimer(30);
               });
             }}
-            disabled={!isValid && isDirty}
-            loading={isSubmitting}
+            disabled={isResendDisabled}
           >
-            {isSubmitting ? "Sending code..." : "Send sign in code"}
-          </PrimaryButton>
-        )}
-      </form>
-    </>
-  );
+            {resendCodeTimer > 0 ? (
+              <span className="text-right">Request new code in {resendCodeTimer} seconds</span>
+            ) : isCodeResending ? (
+              "Sending new code..."
+            ) : errorResendingCode ? (
+              "Please try again later"
+            ) : (
+              <span className="font-medium">Resend code</span>
+            )}
+          </button>
+        </>
+      )}
+      {codeSent ? (
+        <PrimaryButton
+          type="submit"
+          className="w-full text-center h-[46px]"
+          size="md"
+          onClick={handleSubmit(handleSignin)}
+          disabled={!isValid && isDirty}
+          loading={isLoading}
+        >
+          {isLoading ? "Signing in..." : "Sign in"}
+        </PrimaryButton>
+      ) : (
+        <PrimaryButton
+          className="w-full text-center h-[46px]"
+          size="md"
+          onClick={() => {
+            handleSubmit(onSubmit)().then(() => {
+              setResendCodeTimer(30);
+            });
+          }}
+          disabled={!isValid && isDirty}
+          loading={isSubmitting}
+        >
+          {isSubmitting ? "Sending code..." : "Send sign in code"}
+        </PrimaryButton>
+      )}
+    </form>
+  </>;
 };

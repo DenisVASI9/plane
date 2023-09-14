@@ -18,14 +18,14 @@ export const NotAWorkspaceMember = () => (
         </div>
         <div className="flex items-center justify-center gap-2">
           <Link href="/invitations">
-            <a>
-              <SecondaryButton>Check pending invites</SecondaryButton>
-            </a>
+
+            <SecondaryButton>Check pending invites</SecondaryButton>
+
           </Link>
           <Link href="/create-workspace">
-            <a>
-              <PrimaryButton>Create new workspace</PrimaryButton>
-            </a>
+
+            <PrimaryButton>Create new workspace</PrimaryButton>
+
           </Link>
         </div>
       </div>

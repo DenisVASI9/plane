@@ -154,15 +154,18 @@ export const IssueAttachments: React.FC<Props> = (props) => {
             key={attachment.id}
             className="px-3 border border-custom-border-200 rounded-[4px] py-2 flex justify-between items-center bg-custom-background-100"
           >
-            <Link href={attachment.asset}>
-              <a target="_blank" className="text-custom-text-200 truncate flex items-center">
-                {isImage(attachment.attributes.name) ? (
-                  <ImageIcon className="w-5 h-5 mr-2 flex-shrink-0 text-custom-text-400" />
-                ) : (
-                  <FileText className="w-5 h-5 mr-2 flex-shrink-0 text-custom-text-400" />
-                )}
-                <span className="truncate">{attachment.attributes.name}</span>
-              </a>
+            <Link
+              href={attachment.asset}
+              target="_blank"
+              className="text-custom-text-200 truncate flex items-center">
+
+              {isImage(attachment.attributes.name) ? (
+                <ImageIcon className="w-5 h-5 mr-2 flex-shrink-0 text-custom-text-400" />
+              ) : (
+                <FileText className="w-5 h-5 mr-2 flex-shrink-0 text-custom-text-400" />
+              )}
+              <span className="truncate">{attachment.attributes.name}</span>
+
             </Link>
             {allowed && (
               <button

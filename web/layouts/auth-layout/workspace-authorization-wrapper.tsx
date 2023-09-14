@@ -88,11 +88,11 @@ export const WorkspaceAuthorizationLayout: React.FC<Props> = ({
             <NotAuthorizedView
               actionButton={
                 <Link href={`/${workspaceSlug}`}>
-                  <a>
-                    <PrimaryButton className="flex items-center gap-1">
-                      <LayerDiagonalIcon height={16} width={16} color="white" /> Go to workspace
-                    </PrimaryButton>
-                  </a>
+
+                  <PrimaryButton className="flex items-center gap-1">
+                    <LayerDiagonalIcon height={16} width={16} color="white" /> Go to workspace
+                  </PrimaryButton>
+
                 </Link>
               }
               type="workspace"

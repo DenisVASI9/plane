@@ -109,7 +109,7 @@ export const JiraImporterRoot: React.FC<Props> = ({ user }) => {
 
   return (
     <div className="flex h-full flex-col space-y-2">
-      <Link href={`/${workspaceSlug}/settings/imports`}>
+      <Link href={`/${workspaceSlug}/settings/imports`} legacyBehavior>
         <div className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-custom-text-200 hover:text-custom-text-100">
           <div>
             <ArrowLeftIcon className="h-3 w-3" />

@@ -102,23 +102,23 @@ const SettingsNavbar: React.FC<Props> = ({ profilePage = false }) => {
   return (
     <div className="flex flex-wrap gap-4">
       {(profilePage ? profileLinks : projectId ? projectLinks : workspaceLinks).map((link) => (
-        <Link key={link.href} href={link.href}>
-          <a>
-            <div
-              className={`rounded-full border px-5 py-1.5 text-sm outline-none ${
-                (
-                  link.label === "Import"
-                    ? router.asPath.includes(link.href)
-                    : router.asPath === link.href
-                )
-                  ? "border-custom-primary bg-custom-primary text-white"
-                  : "border-custom-border-200 bg-custom-background-100 hover:bg-custom-background-90"
-              }`}
-            >
-              {link.label}
-            </div>
-          </a>
-        </Link>
+        (<Link key={link.href} href={link.href}>
+
+          <div
+            className={`rounded-full border px-5 py-1.5 text-sm outline-none ${
+              (
+                link.label === "Import"
+                  ? router.asPath.includes(link.href)
+                  : router.asPath === link.href
+              )
+                ? "border-custom-primary bg-custom-primary text-white"
+                : "border-custom-border-200 bg-custom-background-100 hover:bg-custom-background-90"
+            }`}
+          >
+            {link.label}
+          </div>
+
+        </Link>)
       ))}
     </div>
   );

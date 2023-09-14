@@ -128,192 +128,194 @@ export const SingleCycleCard: React.FC<TSingleStatProps> = ({
   return (
     <div>
       <div className="flex flex-col rounded-[10px] bg-custom-background-100 border border-custom-border-200 text-xs shadow">
-        <Link href={`/${workspaceSlug}/projects/${projectId}/cycles/${cycle.id}`}>
-          <a className="w-full">
-            <div className="flex h-full flex-col gap-4 rounded-b-[10px] p-4">
-              <div className="flex items-center justify-between gap-1">
-                <span className="flex items-center gap-1">
-                  <span className="h-5 w-5">
-                    <ContrastIcon
-                      className="h-5 w-5"
-                      color={`${
-                        cycleStatus === "current"
-                          ? "#09A953"
-                          : cycleStatus === "upcoming"
-                          ? "#F7AE59"
-                          : cycleStatus === "completed"
-                          ? "#3F76FF"
-                          : cycleStatus === "draft"
-                          ? "rgb(var(--color-text-200))"
-                          : ""
-                      }`}
-                    />
-                  </span>
-                  <Tooltip tooltipContent={cycle.name} className="break-words" position="top-left">
-                    <h3 className="break-words text-lg font-semibold">
-                      {truncateText(cycle.name, 15)}
-                    </h3>
-                  </Tooltip>
-                </span>
-                <span className="flex items-center gap-1 capitalize">
-                  <span
-                    className={`rounded-full px-1.5 py-0.5
-                    ${
+        <Link
+          href={`/${workspaceSlug}/projects/${projectId}/cycles/${cycle.id}`}
+          className="w-full">
+
+          <div className="flex h-full flex-col gap-4 rounded-b-[10px] p-4">
+            <div className="flex items-center justify-between gap-1">
+              <span className="flex items-center gap-1">
+                <span className="h-5 w-5">
+                  <ContrastIcon
+                    className="h-5 w-5"
+                    color={`${
                       cycleStatus === "current"
-                        ? "bg-green-600/5 text-green-600"
+                        ? "#09A953"
                         : cycleStatus === "upcoming"
-                        ? "bg-orange-300/5 text-orange-300"
+                        ? "#F7AE59"
                         : cycleStatus === "completed"
-                        ? "bg-blue-500/5 text-blue-500"
+                        ? "#3F76FF"
                         : cycleStatus === "draft"
-                        ? "bg-neutral-400/5 text-neutral-400"
+                        ? "rgb(var(--color-text-200))"
                         : ""
                     }`}
-                  >
-                    {cycleStatus === "current" ? (
-                      <span className="flex gap-1 whitespace-nowrap">
-                        <PersonRunningIcon className="h-4 w-4" />
-                        {findHowManyDaysLeft(cycle.end_date ?? new Date())} Days Left
-                      </span>
-                    ) : cycleStatus === "upcoming" ? (
-                      <span className="flex gap-1 whitespace-nowrap">
-                        <AlarmClockIcon className="h-4 w-4" />
-                        {findHowManyDaysLeft(cycle.start_date ?? new Date())} Days Left
-                      </span>
-                    ) : cycleStatus === "completed" ? (
-                      <span className="flex gap-1 whitespace-nowrap">
-                        {cycle.total_issues - cycle.completed_issues > 0 && (
-                          <Tooltip
-                            tooltipContent={`${
-                              cycle.total_issues - cycle.completed_issues
-                            } more pending ${
-                              cycle.total_issues - cycle.completed_issues === 1 ? "issue" : "issues"
-                            }`}
-                          >
-                            <span>
-                              <TriangleExclamationIcon className="h-3.5 w-3.5 fill-current" />
-                            </span>
-                          </Tooltip>
-                        )}{" "}
-                        Completed
-                      </span>
-                    ) : (
-                      cycleStatus
-                    )}
-                  </span>
-                  {cycle.is_favorite ? (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleRemoveFromFavorites();
-                      }}
-                    >
-                      <StarIcon className="h-4 w-4 text-orange-400" fill="#f6ad55" />
-                    </button>
+                  />
+                </span>
+                <Tooltip tooltipContent={cycle.name} className="break-words" position="top-left">
+                  <h3 className="break-words text-lg font-semibold">
+                    {truncateText(cycle.name, 15)}
+                  </h3>
+                </Tooltip>
+              </span>
+              <span className="flex items-center gap-1 capitalize">
+                <span
+                  className={`rounded-full px-1.5 py-0.5
+                  ${
+                    cycleStatus === "current"
+                      ? "bg-green-600/5 text-green-600"
+                      : cycleStatus === "upcoming"
+                      ? "bg-orange-300/5 text-orange-300"
+                      : cycleStatus === "completed"
+                      ? "bg-blue-500/5 text-blue-500"
+                      : cycleStatus === "draft"
+                      ? "bg-neutral-400/5 text-neutral-400"
+                      : ""
+                  }`}
+                >
+                  {cycleStatus === "current" ? (
+                    <span className="flex gap-1 whitespace-nowrap">
+                      <PersonRunningIcon className="h-4 w-4" />
+                      {findHowManyDaysLeft(cycle.end_date ?? new Date())} Days Left
+                    </span>
+                  ) : cycleStatus === "upcoming" ? (
+                    <span className="flex gap-1 whitespace-nowrap">
+                      <AlarmClockIcon className="h-4 w-4" />
+                      {findHowManyDaysLeft(cycle.start_date ?? new Date())} Days Left
+                    </span>
+                  ) : cycleStatus === "completed" ? (
+                    <span className="flex gap-1 whitespace-nowrap">
+                      {cycle.total_issues - cycle.completed_issues > 0 && (
+                        <Tooltip
+                          tooltipContent={`${
+                            cycle.total_issues - cycle.completed_issues
+                          } more pending ${
+                            cycle.total_issues - cycle.completed_issues === 1 ? "issue" : "issues"
+                          }`}
+                        >
+                          <span>
+                            <TriangleExclamationIcon className="h-3.5 w-3.5 fill-current" />
+                          </span>
+                        </Tooltip>
+                      )}{" "}
+                      Completed
+                    </span>
                   ) : (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleAddToFavorites();
-                      }}
-                    >
-                      <StarIcon className="h-4 w-4 " color="rgb(var(--color-text-200))" />
-                    </button>
+                    cycleStatus
                   )}
                 </span>
-              </div>
-              <div className="flex h-4 items-center justify-start gap-5 text-custom-text-200">
-                {cycleStatus !== "draft" && (
-                  <>
-                    <div className="flex items-start gap-1">
-                      <CalendarDaysIcon className="h-4 w-4" />
-                      <span>{renderShortDateWithYearFormat(startDate)}</span>
-                    </div>
-                    <ArrowRightIcon className="h-4 w-4" />
-                    <div className="flex items-start gap-1">
-                      <TargetIcon className="h-4 w-4" />
-                      <span>{renderShortDateWithYearFormat(endDate)}</span>
-                    </div>
-                  </>
+                {cycle.is_favorite ? (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRemoveFromFavorites();
+                    }}
+                  >
+                    <StarIcon className="h-4 w-4 text-orange-400" fill="#f6ad55" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleAddToFavorites();
+                    }}
+                  >
+                    <StarIcon className="h-4 w-4 " color="rgb(var(--color-text-200))" />
+                  </button>
                 )}
-              </div>
-
-              <div className="flex justify-between items-end">
-                <div className="flex flex-col gap-2 text-xs text-custom-text-200">
-                  <div className="flex items-center gap-2">
-                    <div className="w-16">Creator:</div>
-                    <div className="flex items-center gap-2.5 text-custom-text-200">
-                      {cycle.owned_by.avatar && cycle.owned_by.avatar !== "" ? (
-                        <img
-                          src={cycle.owned_by.avatar}
-                          height={16}
-                          width={16}
-                          className="rounded-full"
-                          alt={cycle.owned_by.display_name}
-                        />
-                      ) : (
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-300 capitalize text-white">
-                          {cycle.owned_by.display_name.charAt(0)}
-                        </span>
-                      )}
-                      <span className="text-custom-text-200">{cycle.owned_by.display_name}</span>
-                    </div>
+              </span>
+            </div>
+            <div className="flex h-4 items-center justify-start gap-5 text-custom-text-200">
+              {cycleStatus !== "draft" && (
+                <>
+                  <div className="flex items-start gap-1">
+                    <CalendarDaysIcon className="h-4 w-4" />
+                    <span>{renderShortDateWithYearFormat(startDate)}</span>
                   </div>
-                  <div className="flex h-5 items-center gap-2">
-                    <div className="w-16">Members:</div>
-                    {cycle.assignees.length > 0 ? (
-                      <div className="flex items-center gap-1 text-custom-text-200">
-                        <AssigneesList users={cycle.assignees} length={4} />
-                      </div>
+                  <ArrowRightIcon className="h-4 w-4" />
+                  <div className="flex items-start gap-1">
+                    <TargetIcon className="h-4 w-4" />
+                    <span>{renderShortDateWithYearFormat(endDate)}</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="flex justify-between items-end">
+              <div className="flex flex-col gap-2 text-xs text-custom-text-200">
+                <div className="flex items-center gap-2">
+                  <div className="w-16">Creator:</div>
+                  <div className="flex items-center gap-2.5 text-custom-text-200">
+                    {cycle.owned_by.avatar && cycle.owned_by.avatar !== "" ? (
+                      <img
+                        src={cycle.owned_by.avatar}
+                        height={16}
+                        width={16}
+                        className="rounded-full"
+                        alt={cycle.owned_by.display_name}
+                      />
                     ) : (
-                      "No members"
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-300 capitalize text-white">
+                        {cycle.owned_by.display_name.charAt(0)}
+                      </span>
                     )}
+                    <span className="text-custom-text-200">{cycle.owned_by.display_name}</span>
                   </div>
                 </div>
-
-                <div className="flex items-center">
-                  {!isCompleted && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleEditCycle();
-                      }}
-                      className="cursor-pointer rounded p-1 text-custom-text-200 duration-300 hover:bg-custom-background-80"
-                    >
-                      <PencilIcon className="h-4 w-4" />
-                    </button>
+                <div className="flex h-5 items-center gap-2">
+                  <div className="w-16">Members:</div>
+                  {cycle.assignees.length > 0 ? (
+                    <div className="flex items-center gap-1 text-custom-text-200">
+                      <AssigneesList users={cycle.assignees} length={4} />
+                    </div>
+                  ) : (
+                    "No members"
                   )}
+                </div>
+              </div>
 
-                  <CustomMenu width="auto" verticalEllipsis>
-                    {!isCompleted && (
-                      <CustomMenu.MenuItem
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleDeleteCycle();
-                        }}
-                      >
-                        <span className="flex items-center justify-start gap-2">
-                          <TrashIcon className="h-4 w-4" />
-                          <span>Delete cycle</span>
-                        </span>
-                      </CustomMenu.MenuItem>
-                    )}
+              <div className="flex items-center">
+                {!isCompleted && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleEditCycle();
+                    }}
+                    className="cursor-pointer rounded p-1 text-custom-text-200 duration-300 hover:bg-custom-background-80"
+                  >
+                    <PencilIcon className="h-4 w-4" />
+                  </button>
+                )}
+
+                <CustomMenu width="auto" verticalEllipsis>
+                  {!isCompleted && (
                     <CustomMenu.MenuItem
                       onClick={(e) => {
                         e.preventDefault();
-                        handleCopyText();
+                        handleDeleteCycle();
                       }}
                     >
                       <span className="flex items-center justify-start gap-2">
-                        <LinkIcon className="h-4 w-4" />
-                        <span>Copy cycle link</span>
+                        <TrashIcon className="h-4 w-4" />
+                        <span>Delete cycle</span>
                       </span>
                     </CustomMenu.MenuItem>
-                  </CustomMenu>
-                </div>
+                  )}
+                  <CustomMenu.MenuItem
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCopyText();
+                    }}
+                  >
+                    <span className="flex items-center justify-start gap-2">
+                      <LinkIcon className="h-4 w-4" />
+                      <span>Copy cycle link</span>
+                    </span>
+                  </CustomMenu.MenuItem>
+                </CustomMenu>
               </div>
             </div>
-          </a>
+          </div>
+
         </Link>
 
         <div className="flex h-full flex-col rounded-b-[10px]">

@@ -92,13 +92,13 @@ export const IssueLinks: React.FC<Props> = (props) => {
             key={link.id}
             className="px-3 border border-custom-border-200 rounded-[4px] py-2 flex justify-between items-center bg-custom-background-100"
           >
-            <Link href={link.url}>
-              <a target="_blank" className="text-custom-text-200 truncate">
-                <span>
-                  <LinkIcon className="w-4 h-4 inline-block mr-1" />
-                </span>
-                <span>{link.title}</span>
-              </a>
+            <Link href={link.url} target="_blank" className="text-custom-text-200 truncate">
+
+              <span>
+                <LinkIcon className="w-4 h-4 inline-block mr-1" />
+              </span>
+              <span>{link.title}</span>
+
             </Link>
             {allowed && (
               <div className="flex gap-2 items-center">

@@ -35,11 +35,25 @@ import githubWhiteImage from "/public/logos/github-white.png";
 import { render12HourFormatTime, renderShortDate } from "helpers/date-time.helper";
 // types
 import { ICurrentUserResponse } from "types";
-import type { NextPage } from "next";
+import type {GetStaticProps, NextPage} from "next";
 // fetch-keys
 import { CURRENT_USER, USER_WORKSPACE_DASHBOARD } from "constants/fetch-keys";
 // constants
 import { DAYS } from "constants/project";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const WorkspacePage: NextPage = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -85,16 +99,18 @@ const WorkspacePage: NextPage = () => {
             <BoltOutlined fontSize="small" className="-my-1" />
             What{"'"}s New?
           </button>
-          <Link href="https://github.com/makeplane/plane" target="_blank" rel="noopener noreferrer">
-            <a className="flex items-center gap-1.5 bg-custom-background-80 text-xs font-medium py-1.5 px-3 rounded">
-              <Image
-                src={theme === "dark" ? githubWhiteImage : githubBlackImage}
-                height={16}
-                width={16}
-                alt="GitHub Logo"
-              />
-              Star us on GitHub
-            </a>
+          <Link
+            href="https://github.com/makeplane/plane"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 bg-custom-background-80 text-xs font-medium py-1.5 px-3 rounded">
+
+            <Image
+              src={theme === "dark" ? githubWhiteImage : githubBlackImage}
+              height={16}
+              width={16}
+              alt="GitHub Logo"
+            />Star us on GitHub
           </Link>
         </div>
       }

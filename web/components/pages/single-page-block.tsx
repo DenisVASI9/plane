@@ -433,11 +433,11 @@ export const SinglePageBlock: React.FC<Props> = ({
                       <div className="mr-1.5 flex">
                         <Link
                           href={`/${workspaceSlug}/projects/${projectId}/issues/${block.issue}`}
-                        >
-                          <a className="flex h-6 flex-shrink-0 items-center gap-1 rounded bg-custom-background-80 px-1.5 py-1 text-xs">
-                            <LayerDiagonalIcon height="16" width="16" />
-                            {projectDetails?.identifier}-{block.issue_detail?.sequence_id}
-                          </a>
+                          className="flex h-6 flex-shrink-0 items-center gap-1 rounded bg-custom-background-80 px-1.5 py-1 text-xs">
+
+                          <LayerDiagonalIcon height="16" width="16" />
+                          {projectDetails?.identifier}-{block.issue_detail?.sequence_id}
+
                         </Link>
                       </div>
                     )}

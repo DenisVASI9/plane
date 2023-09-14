@@ -7,7 +7,10 @@ const extraImageDomains = (process.env.NEXT_PUBLIC_EXTRA_IMAGE_DOMAINS ?? "")
   .split(",")
   .filter((domain) => domain.length > 0);
 
+const { i18n } = require('./next-i18next.config')
+
 const nextConfig = {
+  i18n,
   reactStrictMode: false,
   swcMinify: true,
   images: {

@@ -337,31 +337,31 @@ export const SingleSidebarProject: React.FC<Props> = observer((props) => {
                   return;
 
                 return (
-                  <Link key={item.name} href={item.href}>
-                    <a className="block w-full">
-                      <Tooltip
-                        tooltipContent={`${project?.name}: ${item.name}`}
-                        position="right"
-                        className="ml-2"
-                        disabled={!sidebarCollapse}
+                  (<Link key={item.name} href={item.href} className="block w-full">
+
+                    <Tooltip
+                      tooltipContent={`${project?.name}: ${item.name}`}
+                      position="right"
+                      className="ml-2"
+                      disabled={!sidebarCollapse}
+                    >
+                      <div
+                        className={`group flex items-center rounded-md px-2 py-1.5 gap-2.5 text-xs font-medium outline-none ${
+                          router.asPath.includes(item.href)
+                            ? "bg-custom-primary-100/10 text-custom-primary-100"
+                            : "text-custom-sidebar-text-200 hover:bg-custom-sidebar-background-80 focus:bg-custom-sidebar-background-80"
+                        } ${sidebarCollapse ? "justify-center" : ""}`}
                       >
-                        <div
-                          className={`group flex items-center rounded-md px-2 py-1.5 gap-2.5 text-xs font-medium outline-none ${
-                            router.asPath.includes(item.href)
-                              ? "bg-custom-primary-100/10 text-custom-primary-100"
-                              : "text-custom-sidebar-text-200 hover:bg-custom-sidebar-background-80 focus:bg-custom-sidebar-background-80"
-                          } ${sidebarCollapse ? "justify-center" : ""}`}
-                        >
-                          <item.Icon
-                            sx={{
-                              fontSize: 18,
-                            }}
-                          />
-                          {!sidebarCollapse && item.name}
-                        </div>
-                      </Tooltip>
-                    </a>
-                  </Link>
+                        <item.Icon
+                          sx={{
+                            fontSize: 18,
+                          }}
+                        />
+                        {!sidebarCollapse && item.name}
+                      </div>
+                    </Tooltip>
+
+                  </Link>)
                 );
               })}
             </Disclosure.Panel>

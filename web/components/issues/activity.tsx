@@ -111,13 +111,15 @@ export const IssueActivitySection: React.FC<Props> = ({
                             {activityItem.actor_detail.first_name} Bot
                           </span>
                         ) : (
-                          <Link href={`/${workspaceSlug}/profile/${activityItem.actor_detail.id}`}>
-                            <a className="text-gray font-medium">
-                              {activityItem.actor_detail.is_bot
-                                ? activityItem.actor_detail.first_name
-                                : activityItem.actor_detail.display_name}
-                            </a>
-                          </Link>
+                          (<Link
+                            href={`/${workspaceSlug}/profile/${activityItem.actor_detail.id}`}
+                            className="text-gray font-medium">
+
+                            {activityItem.actor_detail.is_bot
+                              ? activityItem.actor_detail.first_name
+                              : activityItem.actor_detail.display_name}
+
+                          </Link>)
                         )}{" "}
                         {message}{" "}
                         <span className="whitespace-nowrap">

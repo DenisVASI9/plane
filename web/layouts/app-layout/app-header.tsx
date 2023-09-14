@@ -48,26 +48,29 @@ const Header: React.FC<Props> = ({ breadcrumbs, left, right, setToggleSidebar, n
         <div>{breadcrumbs}</div>
 
         {projectDetails && projectDetails?.is_deployed && (
-          <Link href={`${plane_deploy_url}/${workspaceSlug}/${projectId}`}>
-            <a target="_blank" rel="noreferrer">
-              <Tooltip
-                tooltipContent="This project is public, and live on web."
-                position="bottom-left"
-              >
-                <div className="transition-all flex-shrink-0 bg-custom-primary-100/20 text-custom-primary-100 p-1 rounded overflow-hidden relative flex items-center gap-1 cursor-pointer group">
-                  <div className="w-[14px] h-[14px] flex justify-center items-center">
-                    <span className="material-symbols-rounded text-[14px]">
-                      radio_button_checked
-                    </span>
-                  </div>
-                  <div className="text-xs font-medium">Public</div>
-                  <div className="w-[14px] h-[14px] hidden group-hover:flex justify-center items-center">
-                    <span className="material-symbols-rounded text-[14px]">open_in_new</span>
-                  </div>
+          (<Link
+            href={`${plane_deploy_url}/${workspaceSlug}/${projectId}`}
+            target="_blank"
+            rel="noreferrer">
+
+            <Tooltip
+              tooltipContent="This project is public, and live on web."
+              position="bottom-left"
+            >
+              <div className="transition-all flex-shrink-0 bg-custom-primary-100/20 text-custom-primary-100 p-1 rounded overflow-hidden relative flex items-center gap-1 cursor-pointer group">
+                <div className="w-[14px] h-[14px] flex justify-center items-center">
+                  <span className="material-symbols-rounded text-[14px]">
+                    radio_button_checked
+                  </span>
                 </div>
-              </Tooltip>
-            </a>
-          </Link>
+                <div className="text-xs font-medium">Public</div>
+                <div className="w-[14px] h-[14px] hidden group-hover:flex justify-center items-center">
+                  <span className="material-symbols-rounded text-[14px]">open_in_new</span>
+                </div>
+              </div>
+            </Tooltip>
+
+          </Link>)
         )}
 
         <div className="flex-shrink-0">{left}</div>

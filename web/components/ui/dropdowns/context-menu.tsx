@@ -102,16 +102,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => (
   <>
     {renderAs === "a" ? (
-      <Link href={href}>
-        <a
-          className={`${className} flex w-full items-center gap-2 rounded px-1 py-1.5 text-left text-custom-text-200 hover:bg-custom-background-80`}
-        >
-          <>
-            {Icon && <Icon />}
-            {children}
-          </>
-        </a>
-      </Link>
+      (<Link
+        href={href}
+        className={`${className} flex w-full items-center gap-2 rounded px-1 py-1.5 text-left text-custom-text-200 hover:bg-custom-background-80`}>
+
+        <>
+          {Icon && <Icon />}
+          {children}
+        </>
+
+      </Link>)
     ) : (
       <button
         type="button"

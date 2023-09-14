@@ -39,16 +39,20 @@ export const NotAuthorizedView: React.FC<Props> = ({ actionButton, type }) => {
           {user ? (
             <p>
               You have signed in as {user.email}. <br />
-              <Link href={`/?next=${currentPath}`}>
-                <a className="font-medium text-custom-text-100">Sign in</a>
+              <Link
+                href={`/?next=${currentPath}`}
+                className="font-medium text-custom-text-100">
+                Sign in
               </Link>{" "}
               with different account that has access to this page.
             </p>
           ) : (
             <p>
               You need to{" "}
-              <Link href={`/?next=${currentPath}`}>
-                <a className="font-medium text-custom-text-100">Sign in</a>
+              <Link
+                href={`/?next=${currentPath}`}
+                className="font-medium text-custom-text-100">
+                Sign in
               </Link>{" "}
               with an account that has access to this page.
             </p>

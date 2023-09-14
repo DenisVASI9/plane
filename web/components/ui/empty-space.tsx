@@ -32,11 +32,13 @@ const EmptySpace: React.FC<EmptySpaceProps> = ({ title, description, children, I
       </ul>
       {link ? (
         <div className="mt-6 flex">
-          <Link href={link.href}>
-            <a className="text-sm font-medium text-custom-primary hover:text-custom-primary">
-              {link.text}
-              <span aria-hidden="true"> &rarr;</span>
-            </a>
+          <Link
+            href={link.href}
+            className="text-sm font-medium text-custom-primary hover:text-custom-primary">
+
+            {link.text}
+            <span aria-hidden="true"> &rarr;</span>
+
           </Link>
         </div>
       ) : null}

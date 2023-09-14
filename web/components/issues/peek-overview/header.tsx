@@ -74,13 +74,13 @@ export const PeekOverviewHeader: React.FC<Props> = ({
           </button>
         )}
         <Link href={`/${workspaceSlug}/projects/${issue?.project}/issues/${issue?.id}`}>
-          <a>
-            <OpenInFull
-              sx={{
-                fontSize: "14px",
-              }}
-            />
-          </a>
+
+          <OpenInFull
+            sx={{
+              fontSize: "14px",
+            }}
+          />
+
         </Link>
         <CustomSelect
           value={mode}
