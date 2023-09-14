@@ -10,6 +10,16 @@ import useToast from "hooks/use-toast";
 import DefaultLayout from "layouts/default-layout";
 // ui
 import { PrimaryButton, SecondaryButton } from "components/ui";
+// types
+import {GetStaticProps} from "next";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const CustomErrorComponent = () => {
   const router = useRouter();

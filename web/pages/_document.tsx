@@ -9,6 +9,17 @@ import {
   SITE_TITLE,
 } from "constants/seo-variables";
 import Script from "next/script";
+// types
+import {GetStaticProps} from "next";
+
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 class MyDocument extends Document {
   render() {

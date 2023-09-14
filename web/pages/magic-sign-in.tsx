@@ -12,7 +12,15 @@ import authenticationService from "services/authentication.service";
 import useUserAuth from "hooks/use-user-auth";
 import useToast from "hooks/use-toast";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const MagicSignIn: NextPage = () => {
   const router = useRouter();

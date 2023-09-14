@@ -3,7 +3,15 @@ import React from "react";
 // layouts
 import DefaultLayout from "layouts/default-layout";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
 
 const ErrorPage: NextPage = () => (
   <DefaultLayout>

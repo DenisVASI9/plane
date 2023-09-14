@@ -23,9 +23,17 @@ import { Spinner } from "components/ui";
 // icons
 import { EmptySpace, EmptySpaceItem } from "components/ui/empty-space";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // constants
 import { WORKSPACE_INVITATION } from "constants/fetch-keys";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const WorkspaceInvitation: NextPage = () => {
   const router = useRouter();

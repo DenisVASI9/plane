@@ -10,7 +10,15 @@ import { SecondaryButton } from "components/ui";
 // images
 import Image404 from "public/404.svg";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const PageNotFound: NextPage = () => (
   <DefaultLayout>

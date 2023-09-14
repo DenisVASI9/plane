@@ -21,9 +21,17 @@ import BlackHorizontalLogo from "public/plane-logos/black-horizontal-with-blue-l
 import WhiteHorizontalLogo from "public/plane-logos/white-horizontal-with-blue-logo.svg";
 // types
 import { ICurrentUserResponse, IWorkspace } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { CURRENT_USER } from "constants/fetch-keys";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const CreateWorkspace: NextPage = () => {
   const [defaultValues, setDefaultValues] = useState({

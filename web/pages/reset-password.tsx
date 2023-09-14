@@ -18,7 +18,15 @@ import { Input, PrimaryButton, Spinner } from "components/ui";
 // images
 import BluePlaneLogoWithoutText from "public/plane-logos/blue-without-text.png";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 type FormData = {
   password: string;

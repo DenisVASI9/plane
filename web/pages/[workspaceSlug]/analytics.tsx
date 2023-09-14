@@ -27,8 +27,24 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import emptyAnalytics from "public/empty-state/analytics.svg";
 // types
 import { IAnalyticsParams } from "types";
+import {GetStaticProps} from "next";
 // fetch-keys
 import { ANALYTICS } from "constants/fetch-keys";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const defaultValues: IAnalyticsParams = {
   x_axis: "priority",

@@ -1,5 +1,5 @@
 import { TipTapEditor } from "components/tiptap";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import issuesService from "services/issues.service";
@@ -11,6 +11,21 @@ import DefaultLayout from "layouts/default-layout";
 import Image from "next/image";
 import userService from "services/user.service";
 import { useRouter } from "next/router";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const Editor: NextPage = () => {
   const [user, setUser] = useState<ICurrentUserResponse | undefined>();

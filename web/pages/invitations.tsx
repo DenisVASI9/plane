@@ -27,13 +27,21 @@ import emptyInvitation from "public/empty-state/invitation.svg";
 // helpers
 import { truncateText } from "helpers/string.helper";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import type { IWorkspaceMemberInvitation } from "types";
 // fetch-keys
 import { USER_WORKSPACE_INVITATIONS } from "constants/fetch-keys";
 // constants
 import { ROLE } from "constants/workspace";
 import userService from "services/user.service";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const OnBoard: NextPage = () => {
   const [invitationsRespond, setInvitationsRespond] = useState<string[]>([]);

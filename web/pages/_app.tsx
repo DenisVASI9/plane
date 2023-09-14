@@ -20,8 +20,17 @@ import { SITE_TITLE } from "constants/seo-variables";
 // mobx store provider
 import { MobxStoreProvider } from "lib/mobx/store-provider";
 import MobxStoreInit from "lib/mobx/store-init";
+// types
+import {GetStaticProps} from "next";
 //locales
 import { appWithTranslation } from 'next-i18next'
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
 
 const CrispWithNoSSR = dynamic(() => import("constants/crisp"), { ssr: false });
 
