@@ -39,6 +39,15 @@ import {
 // types
 import type { IIssue } from "types";
 
+import {GetStaticProps} from "next";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
+
 const MobileWebViewIssueDetail = () => {
   const router = useRouter();
   const { workspaceSlug, projectId, issueId } = router.query;

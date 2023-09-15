@@ -7,6 +7,23 @@ import appInstallationsService from "services/app-installations.service";
 // ui
 import { Spinner } from "components/ui";
 
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {GetStaticProps} from "next";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
+
+export async function getStaticPaths() {
+    return {
+        paths: [],
+        fallback: 'blocking',
+    };
+}
+
+
 const AppPostInstallation = () => {
   const router = useRouter();
   const { installation_id, setup_action, state, provider, code } = router.query;

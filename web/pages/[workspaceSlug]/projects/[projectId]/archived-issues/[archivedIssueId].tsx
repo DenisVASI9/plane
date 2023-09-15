@@ -20,11 +20,25 @@ import { Icon, Loader } from "components/ui";
 import { Breadcrumbs } from "components/breadcrumbs";
 // types
 import { IIssue } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { PROJECT_ISSUES_ACTIVITY, ISSUE_DETAILS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const defaultValues: Partial<IIssue> = {
   name: "",

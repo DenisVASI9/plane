@@ -18,12 +18,27 @@ import { SettingsSidebar } from "components/project";
 // ui
 import { BreadcrumbItem, Breadcrumbs } from "components/breadcrumbs";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import { IProject } from "types";
 // constant
 import { PROJECTS_LIST, PROJECT_DETAILS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const AutomationsSettings: NextPage = () => {
   const router = useRouter();

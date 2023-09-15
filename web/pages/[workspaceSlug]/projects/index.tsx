@@ -23,13 +23,20 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 // images
 import emptyProject from "public/empty-state/project.svg";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { PROJECT_MEMBERS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
 // types
 import { IProject } from "types";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
 
 const ProjectsPage: NextPage = () => {
   // router

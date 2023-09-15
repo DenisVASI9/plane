@@ -26,11 +26,26 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import emptyEstimate from "public/empty-state/estimate.svg";
 // types
 import { IEstimate, IProject } from "types";
-import type { NextPage } from "next";
+import type {GetStaticProps, NextPage} from "next";
 // fetch-keys
 import { ESTIMATES_LIST, PROJECT_DETAILS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
+
+export async function getStaticPaths() {
+    return {
+        paths: [],
+        fallback: 'blocking',
+    };
+}
 
 const EstimatesSettings: NextPage = () => {
   const [estimateFormOpen, setEstimateFormOpen] = useState(false);

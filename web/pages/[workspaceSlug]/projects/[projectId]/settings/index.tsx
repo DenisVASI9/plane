@@ -37,11 +37,26 @@ import { truncateText } from "helpers/string.helper";
 import { renderShortDateWithYearFormat } from "helpers/date-time.helper";
 // types
 import { IProject, IWorkspace } from "types";
-import type { NextPage } from "next";
+import type {GetStaticProps, NextPage} from "next";
 // fetch-keys
 import { PROJECTS_LIST, PROJECT_DETAILS, USER_PROJECT_VIEW } from "constants/fetch-keys";
 // constants
 import { NETWORK_CHOICES } from "constants/project";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const defaultValues: Partial<IProject> = {
   name: "",

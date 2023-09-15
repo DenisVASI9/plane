@@ -28,9 +28,24 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { getStatesList, orderStateGroups } from "helpers/state.helper";
 import { truncateText } from "helpers/string.helper";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { STATES_LIST } from "constants/fetch-keys";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const StatesSettings: NextPage = () => {
   const [activeGroup, setActiveGroup] = useState<StateGroup>(null);

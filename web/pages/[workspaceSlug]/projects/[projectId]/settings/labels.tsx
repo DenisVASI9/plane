@@ -29,11 +29,27 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import emptyLabel from "public/empty-state/label.svg";
 // types
 import { IIssueLabels } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { PROJECT_DETAILS, PROJECT_ISSUE_LABELS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
 
 const LabelsSettings: NextPage = () => {
   // create/edit label form

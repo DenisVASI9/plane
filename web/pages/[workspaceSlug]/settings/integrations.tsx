@@ -16,11 +16,26 @@ import { SingleIntegrationCard } from "components/integration";
 import { IntegrationAndImportExportBanner, Loader } from "components/ui";
 import { BreadcrumbItem, Breadcrumbs } from "components/breadcrumbs";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { WORKSPACE_DETAILS, APP_INTEGRATIONS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const WorkspaceIntegrations: NextPage = () => {
   const router = useRouter();

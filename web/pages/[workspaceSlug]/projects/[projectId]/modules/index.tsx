@@ -26,11 +26,25 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import emptyModule from "public/empty-state/module.svg";
 // types
 import { IModule, SelectModuleType } from "types/modules";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { MODULE_LIST, PROJECT_DETAILS } from "constants/fetch-keys";
 // helper
 import { replaceUnderscoreIfSnakeCase, truncateText } from "helpers/string.helper";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const moduleViewOptions: { type: "grid" | "gantt_chart"; icon: any }[] = [
   {

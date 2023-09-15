@@ -55,7 +55,7 @@ import { render24HourFormatTime, renderShortDate } from "helpers/date-time.helpe
 import { copyTextToClipboard, truncateText } from "helpers/string.helper";
 import { orderArrayBy } from "helpers/array.helper";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import { IIssueLabels, IPage, IPageBlock, IProjectMember } from "types";
 // fetch-keys
 import {
@@ -65,6 +65,21 @@ import {
   PROJECT_ISSUE_LABELS,
   USER_PROJECT_VIEW,
 } from "constants/fetch-keys";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const SinglePage: NextPage = () => {
   const [createBlockForm, setCreateBlockForm] = useState(false);

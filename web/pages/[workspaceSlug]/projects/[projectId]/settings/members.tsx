@@ -34,7 +34,7 @@ import { BreadcrumbItem, Breadcrumbs } from "components/breadcrumbs";
 // icons
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import { IProject, IUserLite, IWorkspace } from "types";
 // fetch-keys
 import {
@@ -49,6 +49,21 @@ import {
 import { ROLE } from "constants/workspace";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const defaultValues: Partial<IProject> = {
   project_lead: null,

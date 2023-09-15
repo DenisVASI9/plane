@@ -17,11 +17,25 @@ import {
   ProfileWorkload,
 } from "components/profile";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import { IUserStateDistribution, TStateGroups } from "types";
 // constants
 import { USER_PROFILE_DATA } from "constants/fetch-keys";
 import { GROUP_CHOICES } from "constants/project";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const ProfileOverview: NextPage = () => {
   const router = useRouter();

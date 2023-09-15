@@ -27,9 +27,25 @@ import emptyModule from "public/empty-state/module.svg";
 // helpers
 import { truncateText } from "helpers/string.helper";
 // types
+import {GetStaticProps} from "next";
 import { ISearchIssueResponse } from "types";
 // fetch-keys
 import { MODULE_DETAILS, MODULE_ISSUES, MODULE_LIST } from "constants/fetch-keys";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+    props: {
+        ...(await serverSideTranslations(context.locale!)),
+    },
+});
+
+export async function getStaticPaths() {
+    return {
+        paths: [],
+        fallback: 'blocking',
+    };
+}
 
 const SingleModule: React.FC = () => {
   const [moduleIssuesListModal, setModuleIssuesListModal] = useState(false);

@@ -25,11 +25,19 @@ import { BreadcrumbItem, Breadcrumbs } from "components/breadcrumbs";
 import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 // types
 import { TPageViewProps } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { PROJECT_DETAILS } from "constants/fetch-keys";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const AllPagesList = dynamic<TPagesListProps>(
   () => import("components/pages").then((a) => a.AllPagesList),

@@ -28,9 +28,24 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import emptyCycle from "public/empty-state/cycle.svg";
 // types
 import { SelectCycleType } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // helper
 import { truncateText } from "helpers/string.helper";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const tabsList = ["All", "Active", "Upcoming", "Completed", "Drafts"];
 

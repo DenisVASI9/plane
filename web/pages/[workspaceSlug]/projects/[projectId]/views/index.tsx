@@ -24,7 +24,15 @@ import { PrimaryButton, Loader, EmptyState } from "components/ui";
 import { DeleteViewModal, CreateUpdateViewModal, SingleViewItem } from "components/views";
 // types
 import { IView } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const ProjectViews: NextPage = () => {
   const [createUpdateViewModal, setCreateUpdateViewModal] = useState(false);

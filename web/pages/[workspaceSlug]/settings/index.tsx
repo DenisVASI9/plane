@@ -26,11 +26,27 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import { copyTextToClipboard, truncateText } from "helpers/string.helper";
 // types
 import type { IWorkspace } from "types";
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 // fetch-keys
 import { WORKSPACE_DETAILS, USER_WORKSPACES, WORKSPACE_MEMBERS_ME } from "constants/fetch-keys";
 // constants
 import { ORGANIZATION_SIZE } from "constants/workspace";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
 
 const defaultValues: Partial<IWorkspace> = {
   name: "",

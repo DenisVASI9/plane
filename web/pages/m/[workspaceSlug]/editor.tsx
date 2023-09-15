@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // next
-import type { NextPage } from "next";
+import type {GetStaticProps, NextPage} from "next";
 import { useRouter } from "next/router";
 
 // cookies
@@ -16,6 +16,14 @@ import WebViewLayout from "layouts/web-view-layout";
 // components
 import { TipTapEditor } from "components/tiptap";
 import { PrimaryButton, Spinner } from "components/ui";
+// locales
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
 
 const Editor: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);

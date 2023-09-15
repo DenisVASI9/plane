@@ -14,8 +14,23 @@ import { MyIssuesView, MyIssuesViewOptions } from "components/issues";
 import { PrimaryButton } from "components/ui";
 import { Breadcrumbs, BreadcrumbItem } from "components/breadcrumbs";
 // types
-import type { NextPage } from "next";
+import type { NextPage, GetStaticProps } from "next";
 import useUser from "hooks/use-user";
+
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export const getStaticProps: GetStaticProps = async (context) => ({
+  props: {
+    ...(await serverSideTranslations(context.locale!)),
+  },
+});
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 const MyIssuesPage: NextPage = () => {
   const router = useRouter();
