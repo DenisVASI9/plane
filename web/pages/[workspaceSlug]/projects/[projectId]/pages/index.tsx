@@ -1,5 +1,5 @@
 import { useState, Fragment } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
@@ -71,6 +71,7 @@ const tabsList = ["Recent", "All", "Favorites", "Created by me", "Created by oth
 
 const ProjectPages: NextPage = () => {
   const [createUpdatePageModal, setCreateUpdatePageModal] = useState(false);
+  const { t } = useTranslation();
 
   const [viewType, setViewType] = useState<TPageViewProps>("list");
 

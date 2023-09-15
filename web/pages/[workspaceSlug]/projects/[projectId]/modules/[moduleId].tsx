@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -51,6 +51,7 @@ const SingleModule: React.FC = () => {
   const [moduleIssuesListModal, setModuleIssuesListModal] = useState(false);
   const [moduleSidebar, setModuleSidebar] = useState(true);
   const [analyticsModal, setAnalyticsModal] = useState(false);
+    const { t } = useTranslation();
 
   const router = useRouter();
   const { workspaceSlug, projectId, moduleId } = router.query;

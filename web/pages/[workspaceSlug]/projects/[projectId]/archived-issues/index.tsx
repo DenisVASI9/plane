@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import { useTranslation } from 'next-i18next'
 import useSWR from "swr";
 
 // services
@@ -47,15 +47,15 @@ const ProjectArchivedIssues: NextPage = () => {
       ? () => projectService.getProject(workspaceSlug as string, projectId as string)
       : null
   );
-
+  const { t } = useTranslation()
   return (
     <IssueViewContextProvider>
       <ProjectAuthorizationWrapper
         breadcrumbs={
           <Breadcrumbs>
-            <BreadcrumbItem title="Projects" link={`/${workspaceSlug}/projects`} />
+            <BreadcrumbItem title={t("projects")} link={`/${workspaceSlug}/projects`} />
             <BreadcrumbItem
-              title={`${truncateText(projectDetails?.name ?? "Project", 32)} Archived Issues`}
+              title={`${truncateText(projectDetails?.name ?? t("project"), 32)} ${t("projects.archived-issue.archived-issues")}`}
             />
           </Breadcrumbs>
         }
@@ -73,7 +73,7 @@ const ProjectArchivedIssues: NextPage = () => {
               className="flex items-center gap-1.5 rounded-full border border-custom-border-200 px-3 py-1.5 text-xs"
             >
               <Icon iconName="archive" className="text-base" />
-              <span>Archived Issues</span>
+              <span>{t("projects.archived-issue.archived-issues")}</span>
 
               <XMarkIcon className="h-3 w-3" />
             </button>

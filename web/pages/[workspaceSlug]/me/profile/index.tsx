@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 // react-hook-form
 import { Controller, useForm } from "react-hook-form";
 // services
@@ -81,8 +81,8 @@ const Profile: NextPage = () => {
     if (formData.first_name === "" || formData.last_name === "") {
       setToastAlert({
         type: "error",
-        title: "Error!",
-        message: "First and last names are required.",
+        title: t("error"),
+        message: t("profile.names-required"),
       });
 
       return;
@@ -108,15 +108,15 @@ const Profile: NextPage = () => {
         }, false);
         setToastAlert({
           type: "success",
-          title: "Success!",
-          message: "Profile updated successfully.",
+          title: t("success"),
+          message: t("profile.profile-updated-successfully")
         });
       })
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "There was some error in updating your profile. Please try again.",
+          title: t("error"),
+          message: t('profile.error-in-updating-profile'),
         })
       );
   };
@@ -133,8 +133,8 @@ const Profile: NextPage = () => {
           .then(() => {
             setToastAlert({
               type: "success",
-              title: "Success!",
-              message: "Profile picture removed successfully.",
+              title: t("success"),
+              message: t("profile.picture-removed-successfully"),
             });
             mutateUser((prevData: any) => {
               if (!prevData) return prevData;
@@ -144,8 +144,8 @@ const Profile: NextPage = () => {
           .catch(() => {
             setToastAlert({
               type: "error",
-              title: "Error!",
-              message: "There was some error in deleting your profile picture. Please try again.",
+              title: t("error"),
+              message: t("profile.error-deleting-picture"),
             });
           })
           .finally(() => setIsRemoving(false));
@@ -157,12 +157,12 @@ const Profile: NextPage = () => {
     query: timeZone.label + " " + timeZone.value,
     content: timeZone.label,
   }));
-
+  const { t } = useTranslation()
   return (
     <WorkspaceAuthorizationLayout
       breadcrumbs={
         <Breadcrumbs>
-          <BreadcrumbItem title="My Profile" />
+          <BreadcrumbItem title={t("profile.my-profile")} />
         </Breadcrumbs>
       }
     >
@@ -181,9 +181,9 @@ const Profile: NextPage = () => {
         <div className="p-8">
           <div className="mb-8 space-y-6">
             <div>
-              <h3 className="text-3xl font-semibold">Profile Settings</h3>
+              <h3 className="text-3xl font-semibold">{t("profile.profile-settings")}</h3>
               <p className="mt-1 text-custom-text-200">
-                This information will be visible to only you.
+                {t("profile.information-visible-only-you")}
               </p>
             </div>
             <SettingsNavbar profilePage />
@@ -191,9 +191,9 @@ const Profile: NextPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 sm:space-y-12">
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold text-custom-text-100">Profile Picture</h4>
+                <h4 className="text-lg font-semibold text-custom-text-100">{t("profile.profile-picture")}</h4>
                 <p className="text-sm text-custom-text-200">
-                  Max file size is 5MB. Supported file types are .jpg and .png.
+                  {t("profile.max-file-size")}
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-6">
@@ -220,14 +220,14 @@ const Profile: NextPage = () => {
                         setIsImageUploadModalOpen(true);
                       }}
                     >
-                      Upload
+                      {t("profile.upload")}
                     </SecondaryButton>
                     {myProfile.avatar && myProfile.avatar !== "" && (
                       <DangerButton
                         onClick={() => handleDelete(myProfile.avatar, true)}
                         loading={isRemoving}
                       >
-                        {isRemoving ? "Removing..." : "Remove"}
+                        {isRemoving ? t("profile.removing") : t("profile.remove")}
                       </DangerButton>
                     )}
                   </div>
@@ -236,9 +236,9 @@ const Profile: NextPage = () => {
             </div>
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold">Cover Photo</h4>
+                <h4 className="text-lg font-semibold">{t("profile.cover-photo")}</h4>
                 <p className="text-sm text-custom-text-200">
-                  Select your cover photo from the given library.
+                  {t("profile.select-your-cover-photo")}
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-6">
@@ -270,7 +270,7 @@ const Profile: NextPage = () => {
             </div>
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold text-custom-text-100">Full Name</h4>
+                <h4 className="text-lg font-semibold text-custom-text-100">{t("profile.full-name")}</h4>
               </div>
               <div className="col-span-12 flex items-center gap-2 sm:col-span-6">
                 <Input
@@ -293,10 +293,9 @@ const Profile: NextPage = () => {
             </div>
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold text-custom-text-100">Display Name</h4>
+                <h4 className="text-lg font-semibold text-custom-text-100">{t("profile.display-name")}</h4>
                 <p className="text-sm text-custom-text-200">
-                  This could be your first name, or a nickname — however you{"'"}d like people to
-                  refer to you in Plane.
+                  {t("profile.this-your-first-name")}
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-6">
@@ -311,16 +310,16 @@ const Profile: NextPage = () => {
                   validations={{
                     required: "Display name is required.",
                     validate: (value) => {
-                      if (value.trim().length < 1) return "Display name can't be empty.";
+                      if (value.trim().length < 1) return t("profile.name-cant-be-empty");
 
                       if (value.split("  ").length > 1)
-                        return "Display name can't have two consecutive spaces.";
+                        return t("profile.name-cant-have-two");
 
                       if (value.replace(/\s/g, "").length < 1)
-                        return "Display name must be at least 1 characters long.";
+                        return t("profile.name-must-be-least-1");
 
                       if (value.replace(/\s/g, "").length > 20)
-                        return "Display name must be less than 20 characters long.";
+                        return t("profile.name-must-be-less-20");
 
                       return true;
                     },
@@ -332,7 +331,7 @@ const Profile: NextPage = () => {
               <div className="col-span-12 sm:col-span-6">
                 <h4 className="text-lg font-semibold text-custom-text-100">Email</h4>
                 <p className="text-sm text-custom-text-200">
-                  The email address that you are using.
+                  {t("profile.email")}
                 </p>
               </div>
               <div className="col-span-12 sm:col-span-6">
@@ -349,8 +348,8 @@ const Profile: NextPage = () => {
             </div>
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold text-custom-text-100">Role</h4>
-                <p className="text-sm text-custom-text-200">Add your role.</p>
+                <h4 className="text-lg font-semibold text-custom-text-100">{t("profile.role")}</h4>
+                <p className="text-sm text-custom-text-200">{t("profile.add-your-role")}</p>
               </div>
               <div className="col-span-12 sm:col-span-6">
                 <Controller
@@ -375,13 +374,13 @@ const Profile: NextPage = () => {
                     </CustomSelect>
                   )}
                 />
-                {errors.role && <span className="text-xs text-red-500">Please select a role</span>}
+                {errors.role && <span className="text-xs text-red-500">{t("profile.select-role")}</span>}
               </div>
             </div>
             <div className="grid grid-cols-12 gap-4 sm:gap-16">
               <div className="col-span-12 sm:col-span-6">
-                <h4 className="text-lg font-semibold text-custom-text-100">Timezone</h4>
-                <p className="text-sm text-custom-text-200">Select a timezone</p>
+                <h4 className="text-lg font-semibold text-custom-text-100">{t("profile.timezone")}</h4>
+                <p className="text-sm text-custom-text-200">{t("profile.select-timezone")}</p>
               </div>
               <div className="col-span-12 sm:col-span-6">
                 <Controller
@@ -404,12 +403,12 @@ const Profile: NextPage = () => {
                     />
                   )}
                 />
-                {errors.role && <span className="text-xs text-red-500">Please select a role</span>}
+                {errors.role && <span className="text-xs text-red-500">{t("profile.select-role")}</span>}
               </div>
             </div>
             <div className="sm:text-right">
               <SecondaryButton type="submit" loading={isSubmitting}>
-                {isSubmitting ? "Updating..." : "Update profile"}
+                {isSubmitting ? t("profile.updating") : t("profile.update")}
               </SecondaryButton>
             </div>
           </form>

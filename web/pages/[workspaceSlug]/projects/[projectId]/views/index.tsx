@@ -28,6 +28,13 @@ import type { NextPage, GetStaticProps } from "next";
 
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
+
 export const getStaticProps: GetStaticProps = async (context) => ({
   props: {
     ...(await serverSideTranslations(context.locale!)),

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import { mutate } from "swr";
@@ -61,7 +61,7 @@ const ProjectsPage: NextPage = () => {
             project.name.toLowerCase().includes(query.toLowerCase()) ||
             project.identifier.toLowerCase().includes(query.toLowerCase())
         );
-
+    const { t } = useTranslation()
   return (
     <WorkspaceAuthorizationLayout
       breadcrumbs={
@@ -92,7 +92,7 @@ const ProjectsPage: NextPage = () => {
             }}
           >
             <PlusIcon className="h-4 w-4" />
-            Add Project
+            {t("projects.add-project")}
           </PrimaryButton>
         </div>
       }

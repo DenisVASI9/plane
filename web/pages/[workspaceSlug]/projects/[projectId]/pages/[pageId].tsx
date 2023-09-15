@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -85,6 +85,7 @@ const SinglePage: NextPage = () => {
   const [createBlockForm, setCreateBlockForm] = useState(false);
   const [labelModal, setLabelModal] = useState(false);
   const [showBlock, setShowBlock] = useState(false);
+  const { t } = useTranslation();
 
   const scrollToRef = useRef<HTMLDivElement>(null);
 

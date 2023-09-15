@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -61,6 +61,7 @@ const IssueDetailsPage: NextPage = () => {
   const router = useRouter();
   const { workspaceSlug, projectId, issueId } = router.query;
   // console.log(workspaceSlug, "workspaceSlug")
+    const { t } = useTranslation();
 
   const { user } = useUserAuth();
 

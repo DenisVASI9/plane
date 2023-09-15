@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import { useTranslation } from 'next-i18next'
 // hooks
 import useProjectDetails from "hooks/use-project-details";
 // layouts
@@ -36,6 +36,7 @@ export async function getStaticPaths() {
 const ProjectInbox: NextPage = () => {
   const router = useRouter();
   const { workspaceSlug } = router.query;
+    const { t } = useTranslation();
 
   const { projectDetails } = useProjectDetails();
 

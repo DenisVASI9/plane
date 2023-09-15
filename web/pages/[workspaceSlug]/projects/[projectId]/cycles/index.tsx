@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 // headless ui
@@ -67,6 +67,7 @@ const cycleViews = [
 const ProjectCycles: NextPage = () => {
   const [selectedCycle, setSelectedCycle] = useState<SelectCycleType>();
   const [createUpdateCycleModal, setCreateUpdateCycleModal] = useState(false);
+  const { t } = useTranslation();
 
   const { storedValue: cycleTab, setValue: setCycleTab } = useLocalStorage("cycleTab", "All");
   const { storedValue: cyclesView, setValue: setCyclesView } = useLocalStorage("cycleView", "list");
@@ -108,7 +109,7 @@ const ProjectCycles: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem title="Projects" link={`/${workspaceSlug}/projects`} />
-          <BreadcrumbItem title={`${truncateText(projectDetails?.name ?? "Project", 32)} Cycles`} />
+          <BreadcrumbItem title={`${truncateText(projectDetails?.name ?? t("project"), 32)} ${t("cycles")}`} />
         </Breadcrumbs>
       }
       right={
@@ -120,7 +121,7 @@ const ProjectCycles: NextPage = () => {
           }}
         >
           <PlusIcon className="h-4 w-4" />
-          Add Cycle
+            {t("projects.cycles.add-cycle")}
         </PrimaryButton>
       }
     >
@@ -133,7 +134,7 @@ const ProjectCycles: NextPage = () => {
       {projectDetails?.total_cycles === 0 ? (
         <div className="h-full grid place-items-center">
           <EmptyState
-            title="Plan your project with cycles"
+            title={t("projects.cycles.plan-project-with-cycles")}
             description="Cycle is a custom time period in which a team works to complete items on their backlog."
             image={emptyCycle}
             primaryButton={{

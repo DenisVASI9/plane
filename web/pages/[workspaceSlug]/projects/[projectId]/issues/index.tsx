@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -44,6 +44,7 @@ export async function getStaticPaths() {
 
 const ProjectIssues: NextPage = () => {
   const [analyticsModal, setAnalyticsModal] = useState(false);
+  const { t } = useTranslation();
 
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;

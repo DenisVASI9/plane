@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import useSWR from "swr";
 
 import { useRouter } from "next/router";
@@ -45,21 +46,21 @@ const ProfileActivity = () => {
     workspaceSlug ? USER_ACTIVITY : null,
     workspaceSlug ? () => userService.getUserWorkspaceActivity(workspaceSlug.toString()) : null
   );
-
+  const { t } = useTranslation()
   return (
     <WorkspaceAuthorizationLayout
       breadcrumbs={
         <Breadcrumbs>
-          <BreadcrumbItem title="My Profile Activity" />
+          <BreadcrumbItem title="My Profile Activity"  />
         </Breadcrumbs>
       }
     >
       <div className="p-8">
         <div className="mb-8 space-y-6">
           <div>
-            <h3 className="text-3xl font-semibold">Profile Settings</h3>
+            <h3 className="text-3xl font-semibold">{t("profile.profile-settings")}</h3>
             <p className="mt-1 text-custom-text-200">
-              This information will be visible to only you.
+              {t("profile.information-visible-only-you")}
             </p>
           </div>
           <SettingsNavbar profilePage />
@@ -109,7 +110,7 @@ const ProfileActivity = () => {
                                 : activityItem.actor_detail.display_name}
                             </div>
                             <p className="mt-0.5 text-xs text-custom-text-200">
-                              Commented {timeAgo(activityItem.created_at)}
+                              {t("Commented")} {timeAgo(activityItem.created_at)}
                             </p>
                           </div>
                           <div className="issue-comments-section p-0">
@@ -140,18 +141,18 @@ const ProfileActivity = () => {
                   activityItem.field !== "link" &&
                   activityItem.field !== "estimate" ? (
                     <span className="text-custom-text-200">
-                      created{" "}
+                      {t("created")}{" "}
                       <Link
                         href={`/${workspaceSlug}/projects/${activityItem.project}/issues/${activityItem.issue}`}
                         className="inline-flex items-center hover:underline">
-                        this issue.<ArrowTopRightOnSquareIcon className="ml-1 h-3.5 w-3.5" />
+                          {t("this-issue")}<ArrowTopRightOnSquareIcon className="ml-1 h-3.5 w-3.5" />
 
                       </Link>
                     </span>
                   ) : activityItem.field ? (
                     <ActivityMessage activity={activityItem} showIssue />
                   ) : (
-                    "created the issue."
+                    t("created-the-issue")
                   );
 
                 if ("field" in activityItem && activityItem.field !== "updated_by") {
@@ -204,7 +205,7 @@ const ProfileActivity = () => {
                               <div className="text-xs text-custom-text-200 break-words">
                                 {activityItem.field === "archived_at" &&
                                 activityItem.new_value !== "restore" ? (
-                                  <span className="text-gray font-medium">Plane</span>
+                                  <span className="text-gray font-medium">{t("profile.plane")}</span>
                                 ) : activityItem.actor_detail.is_bot ? (
                                   <span className="text-gray font-medium">
                                     {activityItem.actor_detail.first_name} Bot

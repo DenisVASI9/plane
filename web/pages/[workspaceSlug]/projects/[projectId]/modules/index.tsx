@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -60,6 +60,7 @@ const moduleViewOptions: { type: "grid" | "gantt_chart"; icon: any }[] = [
 const ProjectModules: NextPage = () => {
   const [selectedModule, setSelectedModule] = useState<SelectModuleType>();
   const [createUpdateModule, setCreateUpdateModule] = useState(false);
+  const { t } = useTranslation();
 
   const [modulesView, setModulesView] = useState<"grid" | "gantt_chart">("grid");
 

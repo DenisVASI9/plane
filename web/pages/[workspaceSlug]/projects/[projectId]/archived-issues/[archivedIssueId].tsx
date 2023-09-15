@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-
+import { useTranslation } from 'next-i18next'
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -56,7 +56,7 @@ const defaultValues: Partial<IIssue> = {
 
 const ArchivedIssueDetailsPage: NextPage = () => {
   const [isRestoring, setIsRestoring] = useState(false);
-
+  const { t } = useTranslation()
   const router = useRouter();
   const { workspaceSlug, projectId, archivedIssueId } = router.query;
 
@@ -142,16 +142,16 @@ const ArchivedIssueDetailsPage: NextPage = () => {
       .then(() => {
         setToastAlert({
           type: "success",
-          title: "Success",
-          message: `${issueDetails?.project_detail?.identifier}-${issueDetails?.sequence_id} is restored successfully under the project ${issueDetails?.project_detail?.name}`,
+          title: t("success"),
+          message: `${issueDetails?.project_detail?.identifier}-${issueDetails?.sequence_id} ${t("projects.archived-issue.restored-successfully")} ${issueDetails?.project_detail?.name}`,
         });
         router.push(`/${workspaceSlug}/projects/${projectId}/issues/${archivedIssueId}`);
       })
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Something went wrong. Please try again.",
+          title: t("error"),
+          message: t("projects.archived-issue.something-wrong"),
         });
       })
       .finally(() => setIsRestoring(false));
@@ -162,14 +162,14 @@ const ArchivedIssueDetailsPage: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <Breadcrumbs.BreadcrumbItem
-            title={`${truncateText(issueDetails?.project_detail.name ?? "Project", 32)} Issues`}
+            title={`${truncateText(issueDetails?.project_detail.name ?? t("project"), 32)} ${t("issues")}`}
             link={`/${workspaceSlug}/projects/${projectId as string}/issues`}
             linkTruncate
           />
           <Breadcrumbs.BreadcrumbItem
-            title={`Issue ${issueDetails?.project_detail.identifier ?? "Project"}-${
+            title={`${t("issues")} ${issueDetails?.project_detail.identifier ?? t("project")}-${
               issueDetails?.sequence_id ?? "..."
-            } Details`}
+            } ${t("details")}`}
             unshrinkTitle
           />
         </Breadcrumbs>
@@ -182,15 +182,15 @@ const ArchivedIssueDetailsPage: NextPage = () => {
               <div className="flex items-center justify-between gap-2 px-2.5 py-2 text-sm border rounded-md text-custom-text-200 border-custom-border-200 bg-custom-background-90">
                 <div className="flex gap-2 items-center">
                   <Icon iconName="archive" className="" />
-                  <p>This issue has been archived by Plane.</p>
+                  <p>{t("projects.archived-issue.issue-is-archived")}</p>
                 </div>
                 <button
                   className="flex items-center gap-2 p-1.5 text-sm rounded-md border border-custom-border-200"
                   onClick={handleUnArchive}
                   disabled={isRestoring}
                 >
-                  <Icon iconName="history" />
-                  <span>{isRestoring ? "Restoring..." : "Restore Issue"}</span>
+                  <Icon iconName={t("projects.archived-issue.history")} />
+                  <span>{isRestoring ? t("projects.archived-issue.restoring") : t("projects.archived-issue.restore")}</span>
                 </button>
               </div>
             )}

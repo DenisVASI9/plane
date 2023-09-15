@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import { useTranslation } from 'next-i18next'
 import useSWR from "swr";
 
 // services
@@ -40,6 +40,7 @@ export async function getStaticPaths() {
 const ProjectDraftIssues: NextPage = () => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
+  const { t } = useTranslation();
 
   const { data: projectDetails } = useSWR(
     workspaceSlug && projectId ? PROJECT_DETAILS(projectId as string) : null,
