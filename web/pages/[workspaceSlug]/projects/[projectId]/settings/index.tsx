@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -66,6 +66,7 @@ const defaultValues: Partial<IProject> = {
 };
 
 const GeneralSettings: NextPage = () => {
+  const { t } = useTranslation();
   const [selectProject, setSelectedProject] = useState<string | null>(null);
 
   const { user } = useUserAuth();
@@ -131,15 +132,15 @@ const GeneralSettings: NextPage = () => {
 
         setToastAlert({
           type: "success",
-          title: "Success!",
-          message: "Project updated successfully",
+          title: t("success"),
+          message: t("projects.settings.project-updated-successfully"),
         });
       })
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Project could not be updated. Please try again.",
+          title: t("error"),
+          message: t("projects.settings.project-not-updated"),
         });
       });
   };
@@ -167,7 +168,7 @@ const GeneralSettings: NextPage = () => {
       await projectService
         .checkProjectIdentifierAvailability(workspaceSlug as string, payload.identifier ?? "")
         .then(async (res) => {
-          if (res.exists) setError("identifier", { message: "Identifier already exists" });
+          if (res.exists) setError("identifier", { message: t("projects.settings.identifier-already-exists") });
           else await updateProject(payload);
         });
     else await updateProject(payload);
@@ -191,11 +192,11 @@ const GeneralSettings: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem
-            title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+            title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
             link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
             linkTruncate
           />
-          <BreadcrumbItem title="General Settings" unshrinkTitle />
+          <BreadcrumbItem title={t("general-settings")} unshrinkTitle />
         </Breadcrumbs>
       }
     >
@@ -280,7 +281,7 @@ const GeneralSettings: NextPage = () => {
 
             <div className="flex flex-col gap-8 my-8">
               <div className="flex flex-col gap-1">
-                <h4 className="text-sm">Project Name</h4>
+                <h4 className="text-sm">{t("projects.settings.project-name")}</h4>
                 {projectDetails ? (
                   <Input
                     id="name"
@@ -290,7 +291,7 @@ const GeneralSettings: NextPage = () => {
                     className="!p-3 rounded-md font-medium"
                     placeholder="Project Name"
                     validations={{
-                      required: "Name is required",
+                      required: t("projects.settings.name-is-required"),
                     }}
                     disabled={!isAdmin}
                   />
@@ -302,7 +303,7 @@ const GeneralSettings: NextPage = () => {
               </div>
 
               <div className="flex flex-col gap-1">
-                <h4 className="text-sm">Description</h4>
+                <h4 className="text-sm">{t("description")}</h4>
                 {projectDetails ? (
                   <TextArea
                     id="description"
@@ -323,7 +324,7 @@ const GeneralSettings: NextPage = () => {
 
               <div className="flex items-center justify-between gap-10 w-full">
                 <div className="flex flex-col gap-1 w-1/2">
-                  <h4 className="text-sm">Identifier</h4>
+                  <h4 className="text-sm">{t("projects.settings.identifier")}</h4>
                   {projectDetails ? (
                     <Input
                       id="identifier"
@@ -333,17 +334,17 @@ const GeneralSettings: NextPage = () => {
                       placeholder="Enter identifier"
                       onChange={handleIdentifierChange}
                       validations={{
-                        required: "Identifier is required",
+                        required: t("projects.settings.identifier-is-required"),
                         validate: (value) =>
                           /^[A-Z0-9]+$/.test(value.toUpperCase()) ||
-                          "Identifier must be in uppercase.",
+                          t("projects.settings.identifier-must-be-uppercase"),
                         minLength: {
                           value: 1,
-                          message: "Identifier must at least be of 1 character",
+                          message: t("projects.settings.identifier-must-least-be-of-1"),
                         },
                         maxLength: {
                           value: 5,
-                          message: "Identifier must at most be of 5 characters",
+                          message: t("projects.settings.identifier-must-at-most-be-of-5"),
                         },
                       }}
                       disabled={!isAdmin}
@@ -356,7 +357,7 @@ const GeneralSettings: NextPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-1 w-1/2">
-                  <h4 className="text-sm">Network</h4>
+                  <h4 className="text-sm">{t("network")}</h4>
                   {projectDetails ? (
                     <Controller
                       name="network"
@@ -393,7 +394,7 @@ const GeneralSettings: NextPage = () => {
                       {isSubmitting ? "Updating Project..." : "Update Project"}
                     </PrimaryButton>
                     <span className="text-sm text-custom-sidebar-text-400 italic">
-                      Created on {renderShortDateWithYearFormat(projectDetails?.created_at)}
+                      {t("projects.settings.сreated-on")} {renderShortDateWithYearFormat(projectDetails?.created_at)}
                     </span>
                   </>
                 ) : (
@@ -412,7 +413,7 @@ const GeneralSettings: NextPage = () => {
                     type="button"
                     className="flex items-center justify-between w-full py-4"
                   >
-                    <span className="text-xl tracking-tight">Danger Zone</span>
+                    <span className="text-xl tracking-tight">{t("projects.settings.danger-zone")}</span>
                     <Icon iconName={open ? "expand_more" : "expand_less"} className="!text-2xl" />
                   </Disclosure.Button>
 
@@ -428,10 +429,7 @@ const GeneralSettings: NextPage = () => {
                     <Disclosure.Panel>
                       <div className="flex flex-col gap-8">
                         <span className="text-sm tracking-tight">
-                          The danger zone of the project delete page is a critical area that
-                          requires careful consideration and attention. When deleting a project, all
-                          of the data and resources within that project will be permanently removed
-                          and cannot be recovered.
+                          {t("projects.settings.the-danger-zone")}
                         </span>
                         <div>
                           {projectDetails ? (
@@ -441,7 +439,7 @@ const GeneralSettings: NextPage = () => {
                                 className="!text-sm"
                                 outline
                               >
-                                Delete my project
+                                {t("projects.settings.delete-my-project")}
                               </DangerButton>
                             </div>
                           ) : (

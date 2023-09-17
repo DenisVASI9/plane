@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import {useTranslation} from 'next-i18next';
 import useSWR from "swr";
 
 // services
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async (context) => ({
 const SingleView: React.FC = () => {
   const router = useRouter();
   const { workspaceSlug, projectId, viewId } = router.query;
-
+    const { t } = useTranslation();
   const { data: activeProject } = useSWR(
     workspaceSlug && projectId ? PROJECT_DETAILS(projectId as string) : null,
     workspaceSlug && projectId
@@ -76,7 +76,7 @@ const SingleView: React.FC = () => {
         breadcrumbs={
           <Breadcrumbs>
             <BreadcrumbItem
-              title={`${activeProject?.name ?? "Project"} Views`}
+              title={`${activeProject?.name ?? t("project")} ${t("views")}`}
               link={`/${workspaceSlug}/projects/${activeProject?.id}/cycles`}
             />
           </Breadcrumbs>
@@ -114,7 +114,7 @@ const SingleView: React.FC = () => {
               }}
             >
               <PlusIcon className="h-4 w-4" />
-              Add Issue
+                {t("add-issue")}
             </PrimaryButton>
           </div>
         }
@@ -122,10 +122,10 @@ const SingleView: React.FC = () => {
         {error ? (
           <EmptyState
             image={emptyView}
-            title="View does not exist"
-            description="The view you are looking for does not exist or has been deleted."
+            title={t("projects.settings.view-not-exist")}
+            description={t("projects.settings.view-you-looking-does-not-exist")}
             primaryButton={{
-              text: "View other views",
+              text: t("projects.settings.view-other-views"),
               onClick: () => router.push(`/${workspaceSlug}/projects/${projectId}/views`),
             }}
           />

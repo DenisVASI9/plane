@@ -1,5 +1,5 @@
 import { useEffect, useState, FC } from "react";
-
+import {useTranslation} from 'next-i18next';
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ export interface GithubLoginButtonProps {
 export const GithubLoginButton: FC<GithubLoginButtonProps> = ({ handleSignIn }) => {
   const [loginCallBackURL, setLoginCallBackURL] = useState(undefined);
   const [gitCode, setGitCode] = useState<null | string>(null);
-
+  const { t } = useTranslation();
   const {
     query: { code },
   } = useRouter();
@@ -51,7 +51,7 @@ export const GithubLoginButton: FC<GithubLoginButtonProps> = ({ handleSignIn }) 
             width={20}
             alt="GitHub Logo"
           />
-          <span>Sign in with GitHub</span>
+          <span>{t("components.account.sign-in-with-GitHub")}</span>
         </button>
       </Link>
     </div>

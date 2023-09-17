@@ -197,8 +197,8 @@ const SinglePage: NextPage = () => {
     ).then(() => {
       setToastAlert({
         type: "success",
-        title: "Success",
-        message: "Added to favorites",
+        title: t("success"),
+        message: t("projects.pages.added-favorites"),
       });
     });
 
@@ -220,8 +220,8 @@ const SinglePage: NextPage = () => {
     ).then(() => {
       setToastAlert({
         type: "success",
-        title: "Success",
-        message: "Removed from favorites",
+        title: t("success"),
+        message: t("projects.pages.removed-favorites"),
       });
     });
 
@@ -285,8 +285,8 @@ const SinglePage: NextPage = () => {
       () => {
         setToastAlert({
           type: "success",
-          title: "Link Copied!",
-          message: "Page link copied to clipboard.",
+          title: t("projects.pages.link-copied"),
+          message: t("projects.pages.page-link-copied"),
         });
       }
     );
@@ -323,8 +323,8 @@ const SinglePage: NextPage = () => {
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Something went wrong. Please try again.",
+          title: t("error"),
+          message: t("something-went-wrong"),
         });
       });
   };
@@ -370,10 +370,10 @@ const SinglePage: NextPage = () => {
       {error ? (
         <EmptyState
           image={emptyPage}
-          title="Page does not exist"
+          title={t("projects.pages.page-not-exist")}
           description="The page you are looking for does not exist or has been deleted."
           primaryButton={{
-            text: "View other pages",
+            text: t("projects.pages.view-other-pages"),
             onClick: () => router.push(`/${workspaceSlug}/projects/${projectId}/pages`),
           }}
         />
@@ -476,9 +476,9 @@ const SinglePage: NextPage = () => {
               <div className="flex items-center">
                 <div className="flex items-center gap-6 text-custom-text-200">
                   <Tooltip
-                    tooltipContent={`Last updated at ${render24HourFormatTime(
+                    tooltipContent={`${t("last-updated-at")} ${render24HourFormatTime(
                       pageDetails.updated_at
-                    )} on ${renderShortDate(pageDetails.updated_at)}`}
+                    )} ${t("on")} ${renderShortDate(pageDetails.updated_at)}`}
                   >
                     <p className="text-sm">{render24HourFormatTime(pageDetails.updated_at)}</p>
                   </Tooltip>
@@ -509,7 +509,7 @@ const SinglePage: NextPage = () => {
                             <div className="relative divide-y-2 divide-custom-border-200">
                               <div className="flex items-center justify-between">
                                 <span className="text-sm text-custom-text-200">
-                                  Show full block content
+                                  {t("projects.pages.show-full-block-content")}
                                 </span>
                                 <ToggleSwitch
                                   value={showBlock}
@@ -601,8 +601,8 @@ const SinglePage: NextPage = () => {
                     <Tooltip
                       tooltipContent={`${
                         pageDetails.access
-                          ? "This page is only visible to you."
-                          : "This page can be viewed by anyone in the project."
+                          ? t("projects.pages.this-to-you")
+                          : t("projects.pages.This-to-anyone")
                       }`}
                     >
                       {pageDetails.access ? (

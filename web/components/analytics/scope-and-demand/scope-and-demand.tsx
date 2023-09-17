@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import {useTranslation} from 'next-i18next';
 import useSWR from "swr";
 
 // services
@@ -23,7 +23,7 @@ type Props = {
 export const ScopeAndDemand: React.FC<Props> = ({ fullScreen = true }) => {
   const router = useRouter();
   const { workspaceSlug, projectId, cycleId, moduleId } = router.query;
-
+  const { t } = useTranslation();
   const isProjectLevel = projectId ? true : false;
 
   const params = isProjectLevel
@@ -62,8 +62,8 @@ export const ScopeAndDemand: React.FC<Props> = ({ fullScreen = true }) => {
                   count: user?.count,
                   id: user?.created_by__id,
                 }))}
-                title="Most issues created"
-                emptyStateMessage="Co-workers and the number issues created by them appears here."
+                title={t("components.analytics.most-issues-created")}
+                emptyStateMessage={t("components.analytics.co-workers-and-number-issues-created")}
                 workspaceSlug={workspaceSlug?.toString() ?? ""}
               />
               <AnalyticsLeaderboard
@@ -75,8 +75,8 @@ export const ScopeAndDemand: React.FC<Props> = ({ fullScreen = true }) => {
                   count: user?.count,
                   id: user?.assignees__id,
                 }))}
-                title="Most issues closed"
-                emptyStateMessage="Co-workers and the number issues closed by them appears here."
+                title={t("components.analytics.most-issues-closed")}
+                emptyStateMessage={t("components.analytics.co-workers-and-number-issues-closed")}
                 workspaceSlug={workspaceSlug?.toString() ?? ""}
               />
               <div className={fullScreen ? "md:col-span-2" : ""}>
@@ -95,9 +95,9 @@ export const ScopeAndDemand: React.FC<Props> = ({ fullScreen = true }) => {
       ) : (
         <div className="grid h-full place-items-center p-5">
           <div className="space-y-4 text-custom-text-200">
-            <p className="text-sm">There was some error in fetching the data.</p>
+            <p className="text-sm">{t("components.analytics.error-fetching-data")}</p>
             <div className="flex items-center justify-center gap-2">
-              <PrimaryButton onClick={() => mutateDefaultAnalytics()}>Refresh</PrimaryButton>
+              <PrimaryButton onClick={() => mutateDefaultAnalytics()}>{t("refresh")}</PrimaryButton>
             </div>
           </div>
         </div>

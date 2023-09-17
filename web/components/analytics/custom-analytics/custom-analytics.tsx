@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import {useTranslation} from 'next-i18next';
 import { mutate } from "swr";
 
 // react-hook-form
@@ -43,7 +43,7 @@ export const CustomAnalytics: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
-
+  const { t } = useTranslation();
   const isProjectLevel = projectId ? true : false;
 
   const yAxisKey = params.y_axis === "issue_count" ? "count" : "estimate";
@@ -87,7 +87,7 @@ export const CustomAnalytics: React.FC<Props> = ({
             ) : (
               <div className="grid h-full place-items-center p-5">
                 <div className="space-y-4 text-custom-text-200">
-                  <p className="text-sm">No matching issues found. Try changing the parameters.</p>
+                  <p className="text-sm">{t("components.analytics.no-matching-issues-found")}</p>
                 </div>
               </div>
             )
@@ -105,7 +105,7 @@ export const CustomAnalytics: React.FC<Props> = ({
         ) : (
           <div className="grid h-full place-items-center p-5">
             <div className="space-y-4 text-custom-text-200">
-              <p className="text-sm">There was some error in fetching the data.</p>
+              <p className="text-sm">{t("components.analytics.there-error-in-data")}</p>
               <div className="flex items-center justify-center gap-2">
                 <PrimaryButton
                   onClick={() => {
@@ -114,7 +114,7 @@ export const CustomAnalytics: React.FC<Props> = ({
                     mutate(ANALYTICS(workspaceSlug.toString(), params));
                   }}
                 >
-                  Refresh
+                  {t("refresh")}
                 </PrimaryButton>
               </div>
             </div>

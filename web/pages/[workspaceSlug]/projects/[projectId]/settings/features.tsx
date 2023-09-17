@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -41,38 +41,38 @@ export async function getStaticPaths() {
     fallback: 'blocking',
   };
 }
-
+const { t } = useTranslation();
 const featuresList = [
   {
-    title: "Cycles",
+    title: t("cycles"),
     description:
       "Cycles are enabled for all the projects in this workspace. Access them from the sidebar.",
     icon: <Contrast className="h-4 w-4 text-custom-primary-100 flex-shrink-0" />,
     property: "cycle_view",
   },
   {
-    title: "Modules",
+    title: t("modules"),
     description:
       "Modules are enabled for all the projects in this workspace. Access it from the sidebar.",
     icon: <ModuleIcon width={16} height={16} className="flex-shrink-0" />,
     property: "module_view",
   },
   {
-    title: "Views",
+    title: t("views"),
     description:
       "Views are enabled for all the projects in this workspace. Access it from the sidebar.",
     icon: <Layers className="h-4 w-4 text-cyan-500 flex-shrink-0" />,
     property: "issue_views_view",
   },
   {
-    title: "Pages",
+    title: t("pages"),
     description:
       "Pages are enabled for all the projects in this workspace. Access it from the sidebar.",
     icon: <FileText className="h-4 w-4 text-red-400 flex-shrink-0" />,
     property: "page_view",
   },
   {
-    title: "Inbox",
+    title: t("inbox"),
     description:
       "Inbox are enabled for all the projects in this workspace. Access it from the issues views page.",
     icon: <Inbox className="h-4 w-4 text-cyan-500 flex-shrink-0" />,
@@ -135,8 +135,8 @@ const FeaturesSettings: NextPage = () => {
 
     setToastAlert({
       type: "success",
-      title: "Success!",
-      message: "Project feature updated successfully.",
+      title: t("success"),
+      message: t("projects.settings.project-feature-updated"),
     });
 
     await projectService
@@ -144,8 +144,8 @@ const FeaturesSettings: NextPage = () => {
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Project feature could not be updated. Please try again.",
+          title: t("error"),
+          message: t("projects.settings.project-feature-not-be-updated"),
         })
       );
   };
@@ -155,7 +155,7 @@ const FeaturesSettings: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem
-            title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+            title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
             link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
             linkTruncate
           />
@@ -169,7 +169,7 @@ const FeaturesSettings: NextPage = () => {
         </div>
         <section className="pr-9 py-8 w-full">
           <div className="flex items-center py-3.5 border-b border-custom-border-200">
-            <h3 className="text-xl font-medium">Features</h3>
+            <h3 className="text-xl font-medium">{t("features")}</h3>
           </div>
           <div>
             {featuresList.map((feature) => (

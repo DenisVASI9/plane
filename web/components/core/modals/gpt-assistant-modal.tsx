@@ -13,7 +13,7 @@ import { Input, PrimaryButton, SecondaryButton } from "components/ui";
 import { TipTapEditor } from "components/tiptap";
 // types
 import { IIssue, IPageBlock } from "types";
-
+import {useTranslation} from 'next-i18next';
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
@@ -44,7 +44,7 @@ export const GptAssistantModal: React.FC<Props> = ({
 }) => {
   const [response, setResponse] = useState("");
   const [invalidResponse, setInvalidResponse] = useState(false);
-
+  const { t } = useTranslation();
   const router = useRouter();
   const { workspaceSlug } = router.query;
 
@@ -80,8 +80,8 @@ export const GptAssistantModal: React.FC<Props> = ({
     if (formData.task === "") {
       setToastAlert({
         type: "error",
-        title: "Error!",
-        message: "Please enter some task to get AI assistance.",
+        title: t("error"),
+        message: t("components.core.modals.please-enter-some-task-to-AI"),
       });
       return;
     }
@@ -109,16 +109,16 @@ export const GptAssistantModal: React.FC<Props> = ({
         if (err.status === 429)
           setToastAlert({
             type: "error",
-            title: "Error!",
+            title: t("error"),
             message:
               error ||
-              "You have reached the maximum number of requests of 50 requests per month per user.",
+              t("components.core.modals.have-reached-the-maximum-number"),
           });
         else
           setToastAlert({
             type: "error",
-            title: "Error!",
-            message: error || "Some error occurred. Please try again.",
+            title: t("error"),
+            message: error || t("some-error-occurred"),
           });
       });
   };
@@ -166,8 +166,7 @@ export const GptAssistantModal: React.FC<Props> = ({
       )}
       {invalidResponse && (
         <div className="text-sm text-red-500">
-          No response could be generated. This may be due to insufficient content or task
-          information. Please try again.
+          {t("components.core.modals.no-response-could-be-generated")}
         </div>
       )}
       <Input
@@ -176,8 +175,8 @@ export const GptAssistantModal: React.FC<Props> = ({
         register={register}
         placeholder={`${
           content && content !== ""
-            ? "Tell AI what action to perform on this content..."
-            : "Ask AI anything..."
+            ? t("components.core.modals.tell-AI-what-action-perform")
+            : t("components.core.modals.ask-AI-anything")
         }`}
         autoComplete="off"
       />
@@ -201,11 +200,11 @@ export const GptAssistantModal: React.FC<Props> = ({
                 );
             }}
           >
-            Use this response
+            {t("components.core.modals.use-this-response")}
           </PrimaryButton>
         )}
         <div className="flex items-center gap-2">
-          <SecondaryButton onClick={onClose}>Close</SecondaryButton>
+          <SecondaryButton onClick={onClose}>{t("close")}</SecondaryButton>
           <PrimaryButton
             type="button"
             onClick={handleSubmit(handleResponse)}

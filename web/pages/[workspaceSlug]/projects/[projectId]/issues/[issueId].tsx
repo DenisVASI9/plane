@@ -141,9 +141,9 @@ const IssueDetailsPage: NextPage = () => {
             linkTruncate
           />
           <Breadcrumbs.BreadcrumbItem
-            title={`Issue ${issueDetails?.project_detail.identifier ?? "Project"}-${
+            title={`${t("Issue")} ${issueDetails?.project_detail.identifier ?? t("project")}-${
               issueDetails?.sequence_id ?? "..."
-            } Details`}
+            } ${t("details")}`}
             unshrinkTitle
           />
         </Breadcrumbs>
@@ -155,7 +155,7 @@ const IssueDetailsPage: NextPage = () => {
           title="Issue does not exist"
           description="The issue you are looking for does not exist, has been archived, or has been deleted."
           primaryButton={{
-            text: "View other issues",
+            text: t("projects.issue.view-other-issues"),
             onClick: () => router.push(`/${workspaceSlug}/projects/${projectId}/issues`),
           }}
         />

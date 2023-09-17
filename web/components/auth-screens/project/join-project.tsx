@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -18,7 +18,7 @@ import { USER_PROJECT_VIEW } from "constants/fetch-keys";
 
 export const JoinProject: React.FC = () => {
   const [isJoiningProject, setIsJoiningProject] = useState(false);
-
+    const { t } = useTranslation();
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
 
@@ -46,13 +46,12 @@ export const JoinProject: React.FC = () => {
         <Image src={JoinProjectImg} height="176" width="288" alt="JoinProject" />
       </div>
       <h1 className="text-xl font-medium text-custom-text-100">
-        You are not a member of this project
+          {t("components.auth-screens.not-member-this-project")}
       </h1>
 
       <div className="w-full max-w-md text-base text-custom-text-200">
         <p className="mx-auto w-full text-sm md:w-3/4">
-          You are not a member of this project, but you can join this project by clicking the button
-          below.
+            {t("components.auth-screens.not-member-this-project-you-can-join")}
         </p>
       </div>
       <div>
@@ -62,7 +61,7 @@ export const JoinProject: React.FC = () => {
           onClick={handleJoin}
         >
           <AssignmentClipboardIcon height={16} width={16} color="white" />
-          {isJoiningProject ? "Joining..." : "Click to join"}
+          {isJoiningProject ? t("joining") : t("components.auth-screens.click-to-join")}
         </PrimaryButton>
       </div>
     </div>

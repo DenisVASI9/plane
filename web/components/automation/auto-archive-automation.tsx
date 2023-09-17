@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 // component
 import { CustomSelect, ToggleSwitch } from "components/ui";
 import { SelectMonthModal } from "components/automation";
@@ -17,7 +17,7 @@ type Props = {
 
 export const AutoArchiveAutomation: React.FC<Props> = ({ projectDetails, handleChange }) => {
   const [monthModal, setmonthModal] = useState(false);
-
+  const { t } = useTranslation();
   const initialValues: Partial<IProject> = { archive_in: 1 };
   return (
     <>
@@ -35,9 +35,9 @@ export const AutoArchiveAutomation: React.FC<Props> = ({ projectDetails, handleC
               <ArchiveRestore className="h-4 w-4 text-custom-text-100 flex-shrink-0" />
             </div>
             <div className="">
-              <h4 className="text-sm font-medium">Auto-archive closed issues</h4>
+              <h4 className="text-sm font-medium">{t("components.automation.auto-archive-closed-issues")}</h4>
               <p className="text-sm text-custom-text-200 tracking-tight">
-                Plane will auto archive issues that have been completed or canceled.
+                {t("components.automation.plane-auto-archive-issues")}
               </p>
             </div>
           </div>
@@ -56,13 +56,13 @@ export const AutoArchiveAutomation: React.FC<Props> = ({ projectDetails, handleC
           <div className="ml-12">
             <div className="flex items-center justify-between rounded px-5 py-4 bg-custom-background-90 border border-custom-border-200 gap-2 w-full">
               <div className="w-1/2 text-sm font-medium">
-                Auto-archive issues that are closed for
+                {t("components.automation.auto-archive-issues-closed-for")}
               </div>
               <div className="w-1/2">
                 <CustomSelect
                   value={projectDetails?.archive_in}
                   label={`${projectDetails?.archive_in} ${
-                    projectDetails?.archive_in === 1 ? "Month" : "Months"
+                    projectDetails?.archive_in === 1 ? t("components.automation.month") : t("components.automation.months")
                   }`}
                   onChange={(val: number) => {
                     handleChange({ archive_in: val });
@@ -83,7 +83,7 @@ export const AutoArchiveAutomation: React.FC<Props> = ({ projectDetails, handleC
                       className="flex w-full text-sm select-none items-center rounded px-1 py-1.5 text-custom-text-200 hover:bg-custom-background-80"
                       onClick={() => setmonthModal(true)}
                     >
-                      Customise Time Range
+                      {t("components.automation.customise-time-range")}
                     </button>
                   </>
                 </CustomSelect>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -44,7 +44,7 @@ export async function getStaticPaths() {
 const ProjectIntegrations: NextPage = () => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
-
+  const { t } = useTranslation();
   const { data: projectDetails } = useSWR<IProject>(
     workspaceSlug && projectId ? PROJECT_DETAILS(projectId as string) : null,
     workspaceSlug && projectId
@@ -65,7 +65,7 @@ const ProjectIntegrations: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem
-            title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+            title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
             link={`/${workspaceSlug}/projects/${projectId}/issues`}
             linkTruncate
           />
@@ -92,11 +92,11 @@ const ProjectIntegrations: NextPage = () => {
             </section>
           ) : (
             <EmptyState
-              title="You haven't configured integrations"
-              description="Configure GitHub and other integrations to sync your project issues."
+              title={t("projects.settings.you-havent-integrations")}
+              description={t("projects.settings.configure-other-integrations")}
               image={emptyIntegration}
               primaryButton={{
-                text: "Configure now",
+                text: t("projects.settings.configure-now"),
                 onClick: () => router.push(`/${workspaceSlug}/settings/integrations`),
               }}
             />

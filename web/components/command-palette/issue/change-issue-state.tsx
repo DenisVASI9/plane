@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -29,7 +29,7 @@ type Props = {
 export const ChangeIssueState: React.FC<Props> = ({ setIsPaletteOpen, issue, user }) => {
   const router = useRouter();
   const { workspaceSlug, projectId, issueId } = router.query;
-
+    const { t } = useTranslation();
   const { data: stateGroups, mutate: mutateIssueDetails } = useSWR(
     workspaceSlug && projectId ? STATES_LIST(projectId as string) : null,
     workspaceSlug && projectId
@@ -96,7 +96,7 @@ export const ChangeIssueState: React.FC<Props> = ({ setIsPaletteOpen, issue, use
             </Command.Item>
           ))
         ) : (
-          <div className="text-center">No states found</div>
+          <div className="text-center">{t("components.command-palette.no-states-found")}</div>
         )
       ) : (
         <Spinner />

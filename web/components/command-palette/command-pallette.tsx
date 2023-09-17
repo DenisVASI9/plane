@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 import useSWR from "swr";
 // hooks
@@ -28,7 +28,7 @@ import { observer } from "mobx-react-lite";
 
 export const CommandPalette: React.FC = observer(() => {
   const store: any = useMobxStore();
-
+  const { t } = useTranslation();
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [isIssueModalOpen, setIsIssueModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
@@ -63,13 +63,13 @@ export const CommandPalette: React.FC = observer(() => {
       .then(() => {
         setToastAlert({
           type: "success",
-          title: "Copied to clipboard",
+          title: t("copied-to-clipboard"),
         });
       })
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Some error occurred",
+          title: t("some-error-occurred"),
         });
       });
   }, [router, setToastAlert]);

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -54,7 +54,7 @@ export async function getStaticPaths() {
 const LabelsSettings: NextPage = () => {
   // create/edit label form
   const [labelForm, setLabelForm] = useState(false);
-
+  const { t } = useTranslation();
   // edit label
   const [isUpdating, setIsUpdating] = useState(false);
   const [labelToUpdate, setLabelToUpdate] = useState<IIssueLabels | null>(null);
@@ -121,7 +121,7 @@ const LabelsSettings: NextPage = () => {
         breadcrumbs={
           <Breadcrumbs>
             <BreadcrumbItem
-              title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+              title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
               link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
               linkTruncate
             />
@@ -135,14 +135,14 @@ const LabelsSettings: NextPage = () => {
           </div>
           <section className="pr-9 py-8 gap-10 w-full">
             <div className="flex items-center justify-between pt-2 pb-3.5 border-b border-custom-border-200">
-              <h3 className="text-xl font-medium">Labels</h3>
+              <h3 className="text-xl font-medium">{t("labels")}</h3>
 
               <PrimaryButton
                 onClick={newLabel}
                 size="sm"
                 className="flex items-center justify-center"
               >
-                Add label
+                {t("projects.settings.add-label")}
               </PrimaryButton>
             </div>
             <div className="space-y-3 py-6">
@@ -202,11 +202,11 @@ const LabelsSettings: NextPage = () => {
                     })
                   ) : (
                     <EmptyState
-                      title="No labels yet"
-                      description="Create labels to help organize and filter issues in you project"
+                      title={t("projects.settings.no-labels-yet")}
+                      description={t("projects.settings.create-labels-to-help")}
                       image={emptyLabel}
                       primaryButton={{
-                        text: "Add label",
+                        text: t("projects.settings.add-label"),
                         onClick: () => newLabel(),
                       }}
                       isFullScreen={false}

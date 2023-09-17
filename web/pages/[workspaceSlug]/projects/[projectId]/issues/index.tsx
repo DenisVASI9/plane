@@ -70,7 +70,7 @@ const ProjectIssues: NextPage = () => {
           <Breadcrumbs>
             <BreadcrumbItem title="Projects" link={`/${workspaceSlug}/projects`} />
             <BreadcrumbItem
-              title={`${truncateText(projectDetails?.name ?? "Project", 32)} Issues`}
+              title={`${truncateText(projectDetails?.name ?? t("project"), 32)} ${t("issues")}`}
             />
           </Breadcrumbs>
         }
@@ -109,7 +109,7 @@ const ProjectIssues: NextPage = () => {
               }}
             >
               <PlusIcon className="h-4 w-4" />
-              Add Issue
+              {t("add-issue")}
             </PrimaryButton>
           </div>
         }

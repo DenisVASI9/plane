@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -51,7 +51,7 @@ const StatesSettings: NextPage = () => {
   const [activeGroup, setActiveGroup] = useState<StateGroup>(null);
   const [selectedState, setSelectedState] = useState<string | null>(null);
   const [selectDeleteState, setSelectDeleteState] = useState<string | null>(null);
-
+  const { t } = useTranslation();
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
 
@@ -80,7 +80,7 @@ const StatesSettings: NextPage = () => {
         breadcrumbs={
           <Breadcrumbs>
             <BreadcrumbItem
-              title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+              title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
               link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
               linkTruncate
             />
@@ -94,7 +94,7 @@ const StatesSettings: NextPage = () => {
           </div>
           <div className="pr-9 py-8 gap-10 w-full">
             <div className="flex items-center py-3.5 border-b border-custom-border-200">
-              <h3 className="text-xl font-medium">States</h3>
+              <h3 className="text-xl font-medium">{t("states")}</h3>
             </div>
             <div className="space-y-8 py-6">
               {states && projectDetails && orderedStateGroups ? (

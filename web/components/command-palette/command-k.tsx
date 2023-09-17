@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -45,7 +45,7 @@ type Props = {
 
 export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPaletteOpen }) => {
   const [placeholder, setPlaceholder] = useState("Type a command or search...");
-
+  const { t } = useTranslation();
   const [resultsCount, setResultsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -155,13 +155,13 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
       .then(() => {
         setToastAlert({
           type: "success",
-          title: "Copied to clipboard",
+          title: t("copied-to-clipboard"),
         });
       })
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Some error occurred",
+          title: t("some-error-occurred"),
         });
       });
   }, [router, setToastAlert]);
@@ -261,7 +261,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                   if (e.key === "Escape" || (e.key === "Backspace" && !searchTerm)) {
                     e.preventDefault();
                     setPages((pages) => pages.slice(0, -1));
-                    setPlaceholder("Type a command or search...");
+                    setPlaceholder(t("components.command-palette.type-command-or-search"));
                   }
                 }}
               >
@@ -284,7 +284,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           onClick={() => setIsWorkspaceLevel((prevData) => !prevData)}
                           className="flex-shrink-0"
                         >
-                          Workspace Level
+                          {t("workspace-level")}
                         </button>
                         <ToggleSwitch
                           value={isWorkspaceLevel}
@@ -314,7 +314,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                 <Command.List className="max-h-96 overflow-scroll p-2">
                   {searchTerm !== "" && (
                     <h5 className="text-xs text-custom-text-100 mx-[3px] my-4">
-                      Search results for{" "}
+                      {t("components.command-palette.search-results-for")}{" "}
                       <span className="font-medium">
                         {'"'}
                         {searchTerm}
@@ -328,7 +328,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                     resultsCount === 0 &&
                     searchTerm !== "" &&
                     debouncedSearchTerm !== "" && (
-                      <div className="my-4 text-center text-custom-text-200">No results found.</div>
+                      <div className="my-4 text-center text-custom-text-200">{t("components.command-palette.no-results-found")}</div>
                     )}
 
                   {(isLoading || isSearching) && (
@@ -380,7 +380,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           <Command.Item
                             onSelect={() => {
                               setIsPaletteOpen(false);
-                              setPlaceholder("Change state...");
+                              setPlaceholder(t("components.command-palette.change-state"));
                               setSearchTerm("");
                               setPages([...pages, "change-issue-state"]);
                             }}
@@ -388,12 +388,12 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           >
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="grid_view" />
-                              Change state...
+                              {t("components.command-palette.change-state")}
                             </div>
                           </Command.Item>
                           <Command.Item
                             onSelect={() => {
-                              setPlaceholder("Change priority...");
+                              setPlaceholder(t("components.command-palette.change-priority"));
                               setSearchTerm("");
                               setPages([...pages, "change-issue-priority"]);
                             }}
@@ -401,12 +401,12 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           >
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="bar_chart" />
-                              Change priority...
+                              {t("components.command-palette.change-priority")}
                             </div>
                           </Command.Item>
                           <Command.Item
                             onSelect={() => {
-                              setPlaceholder("Assign to...");
+                              setPlaceholder(t("components.command-palette.assign-to"));
                               setSearchTerm("");
                               setPages([...pages, "change-issue-assignee"]);
                             }}
@@ -414,7 +414,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           >
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="group" />
-                              Assign to...
+                              {t("components.command-palette.assign-to")}
                             </div>
                           </Command.Item>
                           <Command.Item
@@ -428,12 +428,12 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                               {issueDetails?.assignees.includes(user.id) ? (
                                 <>
                                   <Icon iconName="person_remove" />
-                                  Un-assign from me
+                                  {t("components.command-palette.un-assign-from-me")}
                                 </>
                               ) : (
                                 <>
                                   <Icon iconName="person_add" />
-                                  Assign to me
+                                  {t("components.command-palette.assign-to-me")}
                                 </>
                               )}
                             </div>
@@ -441,7 +441,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           <Command.Item onSelect={deleteIssue} className="focus:outline-none">
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="delete" />
-                              Delete issue
+                              {t("components.command-palette.delete-issue")}
                             </div>
                           </Command.Item>
                           <Command.Item
@@ -453,7 +453,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           >
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="link" />
-                              Copy issue URL
+                              {t("components.command-palette.copy-issue-URL")}
                             </div>
                           </Command.Item>
                         </Command.Group>
@@ -471,7 +471,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="stack" />
-                            Create new issue
+                            {t("components.command-palette.create-new-issue")}
                           </div>
                           <kbd>C</kbd>
                         </Command.Item>
@@ -491,7 +491,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                           >
                             <div className="flex items-center gap-2 text-custom-text-200">
                               <Icon iconName="create_new_folder" />
-                              Create new project
+                              {t("components.command-palette.сreate-new-project")}
                             </div>
                             <kbd>P</kbd>
                           </Command.Item>
@@ -513,7 +513,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                             >
                               <div className="flex items-center gap-2 text-custom-text-200">
                                 <Icon iconName="contrast" />
-                                Create new cycle
+                                {t("components.command-palette.create-new-cycle")}
                               </div>
                               <kbd>Q</kbd>
                             </Command.Item>
@@ -531,7 +531,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                             >
                               <div className="flex items-center gap-2 text-custom-text-200">
                                 <Icon iconName="dataset" />
-                                Create new module
+                                {t("components.command-palette.create-new-module")}
                               </div>
                               <kbd>M</kbd>
                             </Command.Item>
@@ -549,7 +549,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                             >
                               <div className="flex items-center gap-2 text-custom-text-200">
                                 <Icon iconName="photo_filter" />
-                                Create new view
+                                {t("components.command-palette.create-new-view")}
                               </div>
                               <kbd>V</kbd>
                             </Command.Item>
@@ -567,7 +567,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                             >
                               <div className="flex items-center gap-2 text-custom-text-200">
                                 <Icon iconName="article" />
-                                Create new page
+                                {t("components.command-palette.create-new-page")}
                               </div>
                               <kbd>D</kbd>
                             </Command.Item>
@@ -585,7 +585,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                               >
                                 <div className="flex items-center gap-2 text-custom-text-200">
                                   <InboxIcon className="h-4 w-4" color="#6b7280" />
-                                  Open inbox
+                                  {t("components.command-palette.open-inbox")}
                                 </div>
                               </Command.Item>
                             </Command.Group>
@@ -596,7 +596,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       <Command.Group heading="Workspace Settings">
                         <Command.Item
                           onSelect={() => {
-                            setPlaceholder("Search workspace settings...");
+                            setPlaceholder(t("components.command-palette.search-workspace-settings"));
                             setSearchTerm("");
                             setPages([...pages, "settings"]);
                           }}
@@ -604,7 +604,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="settings" />
-                            Search settings...
+                            {t("components.command-palette.search-workspace-settings")}
                           </div>
                         </Command.Item>
                       </Command.Group>
@@ -612,12 +612,12 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         <Command.Item onSelect={createNewWorkspace} className="focus:outline-none">
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="create_new_folder" />
-                            Create new workspace
+                            {t("create-new-workspace")}
                           </div>
                         </Command.Item>
                         <Command.Item
                           onSelect={() => {
-                            setPlaceholder("Change interface theme...");
+                            setPlaceholder(t("components.command-palette.change-interface-theme"));
                             setSearchTerm("");
                             setPages([...pages, "change-interface-theme"]);
                           }}
@@ -625,7 +625,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="settings" />
-                            Change interface theme...
+                            {t("components.command-palette.change-interface-theme")}
                           </div>
                         </Command.Item>
                       </Command.Group>
@@ -642,7 +642,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="rocket_launch" />
-                            Open keyboard shortcuts
+                            {t("components.command-palette.open-keyboard-shortcuts")}
                           </div>
                         </Command.Item>
                         <Command.Item
@@ -654,7 +654,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="article" />
-                            Open Plane documentation
+                            {t("components.command-palette.open-Plane-documentation")}
                           </div>
                         </Command.Item>
                         <Command.Item
@@ -666,7 +666,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <DiscordIcon className="h-4 w-4" color="rgb(var(--color-text-200))" />
-                            Join our Discord
+                            {t("components.command-palette.join-our-Discord")}
                           </div>
                         </Command.Item>
                         <Command.Item
@@ -681,7 +681,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <GithubIcon className="h-4 w-4" color="rgb(var(--color-text-200))" />
-                            Report a bug
+                            {t("components.command-palette.report-bug")}
                           </div>
                         </Command.Item>
                         <Command.Item
@@ -693,7 +693,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                         >
                           <div className="flex items-center gap-2 text-custom-text-200">
                             <Icon iconName="sms" />
-                            Chat with us
+                            {t("components.command-palette.chat-with-us")}
                           </div>
                         </Command.Item>
                       </Command.Group>
@@ -708,7 +708,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          General
+                          {t("general")}
                         </div>
                       </Command.Item>
                       <Command.Item
@@ -717,7 +717,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          Members
+                          {t("Members")}
                         </div>
                       </Command.Item>
                       <Command.Item
@@ -726,7 +726,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          Billing and Plans
+                          {t("components.command-palette.billing-and-plans")}
                         </div>
                       </Command.Item>
                       <Command.Item
@@ -735,7 +735,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          Integrations
+                          {t("integrations")}
                         </div>
                       </Command.Item>
                       <Command.Item
@@ -744,7 +744,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          Import
+                          {t("import")}
                         </div>
                       </Command.Item>
                       <Command.Item
@@ -753,7 +753,7 @@ export const CommandK: React.FC<Props> = ({ deleteIssue, isPaletteOpen, setIsPal
                       >
                         <div className="flex items-center gap-2 text-custom-text-200">
                           <SettingIcon className="h-4 w-4 text-custom-text-200" />
-                          Export
+                          {t("export")}
                         </div>
                       </Command.Item>
                     </>

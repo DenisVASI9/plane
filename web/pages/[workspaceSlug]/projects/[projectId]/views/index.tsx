@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps = async (context) => ({
 const ProjectViews: NextPage = () => {
   const [createUpdateViewModal, setCreateUpdateViewModal] = useState(false);
   const [selectedViewToUpdate, setSelectedViewToUpdate] = useState<IView | null>(null);
-
+  const { t } = useTranslation();
   const [deleteViewModal, setDeleteViewModal] = useState(false);
   const [selectedViewToDelete, setSelectedViewToDelete] = useState<IView | null>(null);
 
@@ -82,7 +82,7 @@ const ProjectViews: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem title="Projects" link={`/${workspaceSlug}/projects`} />
-          <BreadcrumbItem title={`${activeProject?.name ?? "Project"} Views`} />
+          <BreadcrumbItem title={`${activeProject?.name ?? t("project")} ${t("views")}`} />
         </Breadcrumbs>
       }
       right={
@@ -116,7 +116,7 @@ const ProjectViews: NextPage = () => {
       {views ? (
         views.length > 0 ? (
           <div className="space-y-5 p-8">
-            <h3 className="text-2xl font-semibold text-custom-text-100">Views</h3>
+            <h3 className="text-2xl font-semibold text-custom-text-100">{t("views")}</h3>
             <div className="divide-y divide-custom-border-200 rounded-[10px] border border-custom-border-200">
               {views.map((view) => (
                 <SingleViewItem
@@ -130,12 +130,12 @@ const ProjectViews: NextPage = () => {
           </div>
         ) : (
           <EmptyState
-            title="Get focused with views"
-            description="Views aid in saving your issues by applying various filters and grouping options."
+            title={t("projects.settings.get-focused-with-views")}
+            description={t("projects.settings.views-aid-in-saving-your-issues")}
             image={emptyView}
             primaryButton={{
               icon: <PlusIcon className="h-4 w-4" />,
-              text: "New View",
+              text: t("projects.settings.new-view"),
               onClick: () => {
                 const e = new KeyboardEvent("keydown", {
                   key: "v",

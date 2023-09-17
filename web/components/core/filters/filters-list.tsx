@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 // icons
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { PriorityIcon, StateGroupIcon } from "components/icons";
@@ -32,7 +32,7 @@ export const FiltersList: React.FC<Props> = ({
   states,
 }) => {
   if (!filters) return <></>;
-
+  const { t } = useTranslation();
   const nullFilters = Object.keys(filters).filter(
     (key) => filters[key as keyof IIssueFilterOptions] === null
   );
@@ -335,7 +335,7 @@ export const FiltersList: React.FC<Props> = ({
           onClick={clearAllFilters}
           className="flex items-center gap-x-1 rounded-full border border-custom-border-200 bg-custom-background-80 px-3 py-1.5 text-xs"
         >
-          <span>Clear all filters</span>
+          <span>{t("components.core.filters.clear-all-filters")}</span>
           <XMarkIcon className="h-3 w-3" />
         </button>
       )}

@@ -1,45 +1,46 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import {useTranslation} from 'next-i18next';
 
 export const SettingsSidebar = () => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
-
+  const { t } = useTranslation();
   const projectLinks: Array<{
     label: string;
     href: string;
   }> = [
     {
-      label: "General",
+      label: t("general"),
       href: `/${workspaceSlug}/projects/${projectId}/settings`,
     },
     {
-      label: "Members",
+      label: t("members"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/members`,
     },
     {
-      label: "Features",
+      label: t("reatures"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/features`,
     },
     {
-      label: "States",
+      label: t("states"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/states`,
     },
     {
-      label: "Labels",
+      label: t("labels"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/labels`,
     },
     {
-      label: "Integrations",
+      label: t("integrations"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/integrations`,
     },
     {
-      label: "Estimates",
+      label: t("estimates"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/estimates`,
     },
     {
-      label: "Automations",
+      label: t("automations"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/automations`,
     },
   ];

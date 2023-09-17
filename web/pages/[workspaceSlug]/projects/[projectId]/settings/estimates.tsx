@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -48,7 +48,8 @@ export async function getStaticPaths() {
 }
 
 const EstimatesSettings: NextPage = () => {
-  const [estimateFormOpen, setEstimateFormOpen] = useState(false);
+    const { t } = useTranslation();
+    const [estimateFormOpen, setEstimateFormOpen] = useState(false);
 
   const [estimateToUpdate, setEstimateToUpdate] = useState<IEstimate | undefined>();
 
@@ -87,8 +88,8 @@ const EstimatesSettings: NextPage = () => {
       .catch(() => {
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Error: Estimate could not be deleted. Please try again",
+          title: t("error"),
+          message: t("projects.settings.estimate-not-deleted"),
         });
       });
   };
@@ -111,8 +112,8 @@ const EstimatesSettings: NextPage = () => {
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Estimate could not be disabled. Please try again",
+          title: t("error"),
+          message: t("projects.settings.estimate-not-disabled"),
         })
       );
   };
@@ -132,7 +133,7 @@ const EstimatesSettings: NextPage = () => {
         breadcrumbs={
           <Breadcrumbs>
             <BreadcrumbItem
-              title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+              title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
               link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
               linkTruncate
             />
@@ -146,7 +147,7 @@ const EstimatesSettings: NextPage = () => {
           </div>
           <div className="pr-9 py-8 flex flex-col w-full">
             <section className="flex items-center justify-between pt-2 pb-3.5 border-b border-custom-border-200">
-              <h3 className="text-xl font-medium">Estimates</h3>
+              <h3 className="text-xl font-medium">{t("estimates")}</h3>
               <div className="col-span-12 space-y-5 sm:col-span-7">
                 <div className="flex items-center gap-2">
                   <PrimaryButton
@@ -155,10 +156,10 @@ const EstimatesSettings: NextPage = () => {
                       setEstimateFormOpen(true);
                     }}
                   >
-                    Add Estimate
+                      {t("projects.settings.add-estimate")}
                   </PrimaryButton>
                   {projectDetails?.estimate && (
-                    <SecondaryButton onClick={disableEstimates}>Disable Estimates</SecondaryButton>
+                    <SecondaryButton onClick={disableEstimates}>{t("projects.settings.disable-estimates")}</SecondaryButton>
                   )}
                 </div>
               </div>
@@ -179,12 +180,12 @@ const EstimatesSettings: NextPage = () => {
               ) : (
                 <div className="h-full w-full overflow-y-auto">
                   <EmptyState
-                    title="No estimates yet"
-                    description="Estimates help you communicate the complexity of an issue."
+                    title={t("projects.settings.no-estimates-yet")}
+                    description={t("projects.settings.estimates-help-you")}
                     image={emptyEstimate}
                     primaryButton={{
                       icon: <PlusIcon className="h-4 w-4" />,
-                      text: "Add Estimate",
+                      text: t("projects.settings.add-estimate"),
                       onClick: () => {
                         setEstimateToUpdate(undefined);
                         setEstimateFormOpen(true);

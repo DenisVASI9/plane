@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 import useSWR, { mutate } from "swr";
@@ -44,7 +44,7 @@ type Props = {
 
 export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user }) => {
   const [query, setQuery] = useState("");
-
+  const { t } = useTranslation();
   const router = useRouter();
   const { workspaceSlug, projectId, cycleId, moduleId, viewId } = router.query;
 
@@ -86,8 +86,8 @@ export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user
     if (!data.delete_issue_ids || data.delete_issue_ids.length === 0) {
       setToastAlert({
         type: "error",
-        title: "Error!",
-        message: "Please select at least one issue.",
+        title: t("error"),
+        message: t("components.core.modals.select-least-issue"),
       });
       return;
     }
@@ -122,8 +122,8 @@ export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user
       .then(() => {
         setToastAlert({
           type: "success",
-          title: "Success!",
-          message: "Issues deleted successfully!",
+          title: t("success"),
+          message: t("components.core.modals.issues-deleted"),
         });
 
         if (displayFilters.layout === "calendar") mutate(calendarFetchKey);
@@ -143,8 +143,8 @@ export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Something went wrong. Please try again.",
+          title: t("error"),
+          message: t("something-went-wrong"),
         })
       );
   };
@@ -247,7 +247,7 @@ export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user
                       <div className="flex flex-col items-center justify-center gap-4 px-3 py-8 text-center">
                         <LayerDiagonalIcon height="56" width="56" />
                         <h3 className="text-custom-text-200">
-                          No issues found. Create a new issue with{" "}
+                          {t("no-issues-found-create-new")}{" "}
                           <pre className="inline rounded bg-custom-background-80 px-2 py-1">C</pre>.
                         </h3>
                       </div>
@@ -259,7 +259,7 @@ export const BulkDeleteIssuesModal: React.FC<Props> = ({ isOpen, setIsOpen, user
                   <div className="flex items-center justify-end gap-2 p-3">
                     <SecondaryButton onClick={handleClose}>Cancel</SecondaryButton>
                     <DangerButton onClick={handleSubmit(handleDelete)} loading={isSubmitting}>
-                      {isSubmitting ? "Deleting..." : "Delete selected issues"}
+                      {isSubmitting ? t("deleting") : t("components.core.modals.delete-selected-issues")}
                     </DangerButton>
                   </div>
                 )}

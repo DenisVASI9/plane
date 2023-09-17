@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {useTranslation} from 'next-i18next';
 
 // react-hook-form
 import { useForm } from "react-hook-form";
@@ -39,7 +40,6 @@ export const LinkModal: React.FC<Props> = ({
   } = useForm<ModuleLink>({
     defaultValues,
   });
-
   const onClose = () => {
     handleClose();
     const timeout = setTimeout(() => {
@@ -47,6 +47,7 @@ export const LinkModal: React.FC<Props> = ({
       clearTimeout(timeout);
     }, 500);
   };
+  const { t } = useTranslation();
 
   const handleFormSubmit = async (formData: IIssueLink | ModuleLink) => {
     if (!data) await createIssueLink({ title: formData.title, url: formData.url });
@@ -103,7 +104,7 @@ export const LinkModal: React.FC<Props> = ({
                         as="h3"
                         className="text-lg font-medium leading-6 text-custom-text-100"
                       >
-                        {status ? "Update Link" : "Add Link"}
+                        {status ? t("components.core.modals.update-link") : t("components.core.modals.add-link")}
                       </Dialog.Title>
                       <div className="mt-2 space-y-3">
                         <div>
@@ -117,7 +118,7 @@ export const LinkModal: React.FC<Props> = ({
                             error={errors.url}
                             register={register}
                             validations={{
-                              required: "URL is required",
+                              required: t("components.core.modals.URL-is-required"),
                             }}
                           />
                         </div>
@@ -141,11 +142,11 @@ export const LinkModal: React.FC<Props> = ({
                     <PrimaryButton type="submit" loading={isSubmitting}>
                       {status
                         ? isSubmitting
-                          ? "Updating Link..."
-                          : "Update Link"
+                          ? t("components.core.modals.updating-link")
+                          : t("components.core.modals.update-link")
                         : isSubmitting
-                        ? "Adding Link..."
-                        : "Add Link"}
+                        ? t("components.core.modals.adding-link")
+                        : t("components.core.modals.add-link")}
                     </PrimaryButton>
                   </div>
                 </form>

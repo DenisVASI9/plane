@@ -102,7 +102,7 @@ const ProjectModules: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem title="Projects" link={`/${workspaceSlug}/projects`} />
-          <BreadcrumbItem title={`${truncateText(activeProject?.name ?? "Project", 32)} Modules`} />
+          <BreadcrumbItem title={`${truncateText(activeProject?.name ?? t("project"), 32)} ${t("modules")}`} />
         </Breadcrumbs>
       }
       right={
@@ -111,7 +111,7 @@ const ProjectModules: NextPage = () => {
             <Tooltip
               key={option.type}
               tooltipContent={
-                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} View</span>
+                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} {t("view")}</span>
               }
               position="bottom"
             >
@@ -139,7 +139,7 @@ const ProjectModules: NextPage = () => {
             }}
           >
             <PlusIcon className="h-4 w-4" />
-            Add Module
+            {t("projects.modules.add-module")}
           </PrimaryButton>
         </div>
       }
@@ -173,12 +173,12 @@ const ProjectModules: NextPage = () => {
           </>
         ) : (
           <EmptyState
-            title="Manage your project with modules"
-            description="Modules are smaller, focused projects that help you group and organize issues."
+            title={t("projects.modules.manage-your-project")}
+            description={t("projects.modules.modules-are-smaller")}
             image={emptyModule}
             primaryButton={{
               icon: <PlusIcon className="h-4 w-4" />,
-              text: "New Module",
+              text: t("projects.modules.new-module"),
               onClick: () => {
                 const e = new KeyboardEvent("keydown", {
                   key: "m",

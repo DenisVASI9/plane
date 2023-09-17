@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { mutate } from "swr";
-
+import {useTranslation} from 'next-i18next';
 // headless ui
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 // services
@@ -49,7 +49,7 @@ export const ExistingIssuesListModal: React.FC<Props> = ({
   const [selectedIssues, setSelectedIssues] = useState<ISearchIssueResponse[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isWorkspaceLevel, setIsWorkspaceLevel] = useState(false);
-
+  const { t } = useTranslation();
   const debouncedSearchTerm: string = useDebounce(searchTerm, 500);
 
   const router = useRouter();
@@ -94,9 +94,9 @@ export const ExistingIssuesListModal: React.FC<Props> = ({
     handleClose();
 
     setToastAlert({
-      title: "Success",
+      title: t("success"),
       type: "success",
-      message: `Issue${selectedIssues.length > 1 ? "s" : ""} added successfully`,
+      message: `${t("issue")}${selectedIssues.length > 1 ? "s" : ""} ${t("components.core.modals.added-successfully")}`,
     });
   };
 
@@ -193,7 +193,7 @@ export const ExistingIssuesListModal: React.FC<Props> = ({
                       </div>
                     ) : (
                       <div className="w-min text-xs border border-custom-border-200 bg-custom-background-80 p-2 rounded-md whitespace-nowrap">
-                        No issues selected
+                        {t("components.core.modals.no-issues-selected")}
                       </div>
                     )}
                     {workspaceLevelToggle && (
@@ -212,7 +212,7 @@ export const ExistingIssuesListModal: React.FC<Props> = ({
                             onClick={() => setIsWorkspaceLevel((prevData) => !prevData)}
                             className="flex-shrink-0"
                           >
-                            Workspace Level
+                            {t("workspace-level")}
                           </button>
                         </div>
                       </Tooltip>
@@ -222,13 +222,13 @@ export const ExistingIssuesListModal: React.FC<Props> = ({
                   <Combobox.Options static className="max-h-80 scroll-py-2 overflow-y-auto">
                     {searchTerm !== "" && (
                       <h5 className="text-[0.825rem] text-custom-text-200 mx-2">
-                        Search results for{" "}
+                        {t("components.core.modals.search-results-for")}{" "}
                         <span className="text-custom-text-100">
                           {'"'}
                           {searchTerm}
                           {'"'}
                         </span>{" "}
-                        in project:
+                        {t("components.core.modals.in-project")}:
                       </h5>
                     )}
 

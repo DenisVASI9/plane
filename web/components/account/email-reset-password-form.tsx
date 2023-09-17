@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 // react hook form
 import { useForm } from "react-hook-form";
 // services
@@ -15,7 +15,7 @@ type Props = {
 
 export const EmailResetPasswordForm: React.FC<Props> = ({ setIsResettingPassword }) => {
   const { setToastAlert } = useToast();
-
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -38,22 +38,22 @@ export const EmailResetPasswordForm: React.FC<Props> = ({ setIsResettingPassword
       .then(() =>
         setToastAlert({
           type: "success",
-          title: "Success!",
-          message: "Password reset link has been sent to your email address.",
+          title: t("success"),
+          message: t("components.account.password-reset-link-sent"),
         })
       )
       .catch((err) => {
         if (err.status === 400)
           setToastAlert({
             type: "error",
-            title: "Error!",
-            message: "Please check the Email ID entered.",
+            title: t("error"),
+            message: t("components.account.please-check-email"),
           });
         else
           setToastAlert({
             type: "error",
-            title: "Error!",
-            message: "Something went wrong. Please try again.",
+            title: t("error"),
+            message: t("something-went-wrong"),
           });
       });
   };
@@ -70,14 +70,14 @@ export const EmailResetPasswordForm: React.FC<Props> = ({ setIsResettingPassword
           name="email"
           register={register}
           validations={{
-            required: "Email address is required",
+            required: t("components.account.email-required"),
             validate: (value) =>
               /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
                 value
-              ) || "Email address is not valid",
+              ) || t("components.account.email-not-valid"),
           }}
           error={errors.email}
-          placeholder="Enter registered email address.."
+          placeholder={t("components.account.enter-registered-email")}
           className="border-custom-border-300 h-[46px]"
         />
       </div>
@@ -89,7 +89,7 @@ export const EmailResetPasswordForm: React.FC<Props> = ({ setIsResettingPassword
           Go Back
         </SecondaryButton>
         <PrimaryButton type="submit" className="w-full text-center h-[46px]" loading={isSubmitting}>
-          {isSubmitting ? "Sending link..." : "Send reset link"}
+          {isSubmitting ? t("components.account.sending-link") : t("components.account.send-reset-link")}
         </PrimaryButton>
       </div>
     </form>

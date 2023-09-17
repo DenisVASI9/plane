@@ -3,7 +3,7 @@ import React, { Fragment, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
-
+import {useTranslation} from 'next-i18next';
 // react-hook-form
 import { useForm } from "react-hook-form";
 // hooks
@@ -58,7 +58,7 @@ const tabsList = ["Scope and Demand", "Custom Analytics"];
 const Analytics = () => {
   const router = useRouter();
   const { workspaceSlug } = router.query;
-
+  const { t } = useTranslation();
   const { user } = useUserAuth();
   const { projects } = useProjects();
 
@@ -104,7 +104,7 @@ const Analytics = () => {
     <WorkspaceAuthorizationLayout
       breadcrumbs={
         <Breadcrumbs>
-          <BreadcrumbItem title="Workspace Analytics" />
+          <BreadcrumbItem title={t("projects.pages.workspace-analytics")} />
         </Breadcrumbs>
       }
     >
@@ -147,12 +147,12 @@ const Analytics = () => {
           </div>
         ) : (
           <EmptyState
-            title="You can see your all projects' analytics here"
-            description="Let's create your first project and analyse the stats with various graphs."
+            title={t("projects.pages.all-projects-analytics-here")}
+            description={t("projects.pages.create-your-first-project")}
             image={emptyAnalytics}
             primaryButton={{
               icon: <PlusIcon className="h-4 w-4" />,
-              text: "New Project",
+              text: t("new-project"),
               onClick: () => {
                 const e = new KeyboardEvent("keydown", {
                   key: "p",

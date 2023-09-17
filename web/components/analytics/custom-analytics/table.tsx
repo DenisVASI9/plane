@@ -10,7 +10,7 @@ import { generateBarColor, renderMonthAndYear } from "helpers/analytics.helper";
 import { IAnalyticsParams, IAnalyticsResponse, TIssuePriorities } from "types";
 // constants
 import { ANALYTICS_X_AXIS_VALUES, ANALYTICS_Y_AXIS_VALUES, DATE_KEYS } from "constants/analytics";
-
+import {useTranslation} from 'next-i18next';
 type Props = {
   analytics: IAnalyticsResponse;
   barGraphData: {
@@ -25,11 +25,11 @@ export const AnalyticsTable: React.FC<Props> = ({ analytics, barGraphData, param
   const renderAssigneeName = (assigneeId: string): string => {
     const assignee = analytics.extras.assignee_details.find((a) => a.assignees__id === assigneeId);
 
-    if (!assignee) return "No assignee";
+    if (!assignee) return t("components.analytics.no-assignee");
 
-    return assignee.assignees__display_name || "No assignee";
+    return assignee.assignees__display_name || t("components.analytics.no-assignee");
   };
-
+  const { t } = useTranslation();
   return (
     <div className="flow-root">
       <div className="overflow-x-auto">

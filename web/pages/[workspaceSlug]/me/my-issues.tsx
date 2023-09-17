@@ -109,7 +109,7 @@ const MyIssuesPage: NextPage = () => {
                         }}
                     >
                         <PlusIcon className="h-4 w-4"/>
-                        {t("profile.add-issue")}
+                        {t("add-issue")}
                     </PrimaryButton>
                 </div>
             }

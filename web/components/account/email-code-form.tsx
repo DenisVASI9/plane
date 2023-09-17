@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useTranslation} from 'next-i18next';
 import { useForm } from "react-hook-form";
 // ui
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
@@ -22,7 +23,7 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
   const [isCodeResending, setIsCodeResending] = useState(false);
   const [errorResendingCode, setErrorResendingCode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const { t } = useTranslation();
   const { setToastAlert } = useToast();
   const { timer: resendCodeTimer, setTimer: setResendCodeTimer } = useTimer();
 
@@ -58,7 +59,7 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
       .catch((err) => {
         setErrorResendingCode(true);
         setToastAlert({
-          title: "Oops!",
+          title: t("error"),
           type: "error",
           message: err?.error,
         });
@@ -75,9 +76,9 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
       .catch((error) => {
         setIsLoading(false);
         setToastAlert({
-          title: "Oops!",
+          title: t("error"),
           type: "error",
-          message: error?.response?.data?.error ?? "Enter the correct code to sign in",
+          message: error?.response?.data?.error ?? t("components.account.enter-correct-code"),
         });
         setError("token" as keyof EmailCodeFormValues, {
           type: "manual",
@@ -114,9 +115,9 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
   return <>
     {(codeSent || codeResent) && (
       <p className="text-center mt-4">
-        We have sent the sign in code.
+        {t("components.account.we-sent-code")}
         <br />
-        Please check your inbox at <span className="font-medium">{watch("email")}</span>
+        {t("components.account.please-check-inbox")} <span className="font-medium">{watch("email")}</span>
       </p>
     )}
     <form className="space-y-4 mt-10 sm:w-[360px] mx-auto">
@@ -127,14 +128,14 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
           name="email"
           register={register}
           validations={{
-            required: "Email address is required",
+            required: t("components.account.email-required"),
             validate: (value) =>
               /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
                 value
-              ) || "Email address is not valid",
+              ) || t("components.account.email-not-valid"),
           }}
           error={errors.email}
-          placeholder="Enter your email address..."
+          placeholder={t("components.account.enter-your-email")}
           className="border-custom-border-300 h-[46px]"
         />
       </div>
@@ -147,10 +148,10 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
             name="token"
             register={register}
             validations={{
-              required: "Code is required",
+              required: t("components.account.сode-required"),
             }}
             error={errors.token}
-            placeholder="Enter code..."
+            placeholder={t("components.account.enter-code")}
             className="border-custom-border-300 h-[46px]"
           />
           <button
@@ -171,13 +172,13 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
             disabled={isResendDisabled}
           >
             {resendCodeTimer > 0 ? (
-              <span className="text-right">Request new code in {resendCodeTimer} seconds</span>
+              <span className="text-right">{t("components.account.request-new-code-in")} {resendCodeTimer} {t("seconds")}</span>
             ) : isCodeResending ? (
-              "Sending new code..."
+              t("components.account.sending-new-code")
             ) : errorResendingCode ? (
-              "Please try again later"
+              t("please-try-again-later")
             ) : (
-              <span className="font-medium">Resend code</span>
+              <span className="font-medium">{t("components.account.resend-code")}</span>
             )}
           </button>
         </>
@@ -191,7 +192,7 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
           disabled={!isValid && isDirty}
           loading={isLoading}
         >
-          {isLoading ? "Signing in..." : "Sign in"}
+          {isLoading ? t("components.account.signing-in") : t("sign-in")}
         </PrimaryButton>
       ) : (
         <PrimaryButton
@@ -205,7 +206,7 @@ export const EmailCodeForm = ({ handleSignIn }: any) => {
           disabled={!isValid && isDirty}
           loading={isSubmitting}
         >
-          {isSubmitting ? "Sending code..." : "Send sign in code"}
+          {isSubmitting ? t("components.account.sending-code") : t("components.account.send-sign-in-code")}
         </PrimaryButton>
       )}
     </form>

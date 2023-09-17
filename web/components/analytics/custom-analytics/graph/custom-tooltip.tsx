@@ -2,6 +2,7 @@
 import { BarTooltipProps } from "@nivo/bar";
 import { DATE_KEYS } from "constants/analytics";
 import { renderMonthAndYear } from "helpers/analytics.helper";
+import {useTranslation} from 'next-i18next';
 // types
 import { IAnalyticsParams, IAnalyticsResponse } from "types";
 
@@ -13,13 +14,13 @@ type Props = {
 
 export const CustomTooltip: React.FC<Props> = ({ datum, analytics, params }) => {
   let tooltipValue: string | number = "";
-
+    const { t } = useTranslation();
   const renderAssigneeName = (assigneeId: string): string => {
     const assignee = analytics.extras.assignee_details.find((a) => a.assignees__id === assigneeId);
 
-    if (!assignee) return "No assignee";
+    if (!assignee) return t("components.analytics.no-assignee");
 
-    return assignee.assignees__display_name || "No assignee";
+    return assignee.assignees__display_name || t("components.analytics.no-assignee");
   };
 
   if (params.segment) {
@@ -27,7 +28,7 @@ export const CustomTooltip: React.FC<Props> = ({ datum, analytics, params }) => 
     else tooltipValue = datum.id;
   } else {
     if (DATE_KEYS.includes(params.x_axis)) tooltipValue = datum.indexValue;
-    else tooltipValue = datum.id === "count" ? "Issue count" : "Estimate";
+    else tooltipValue = datum.id === "count" ? t("components.analytics.issue-count") : t("estimate");
   }
 
   return (

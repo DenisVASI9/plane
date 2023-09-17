@@ -10,7 +10,7 @@ import useUser from "hooks/use-user";
 // images
 import ProjectNotAuthorizedImg from "public/auth/project-not-authorized.svg";
 import WorkspaceNotAuthorizedImg from "public/auth/workspace-not-authorized.svg";
-
+import {useTranslation} from 'next-i18next';
 type Props = {
   actionButton?: React.ReactNode;
   type: "project" | "workspace";
@@ -19,7 +19,7 @@ type Props = {
 export const NotAuthorizedView: React.FC<Props> = ({ actionButton, type }) => {
   const { user } = useUser();
   const { asPath: currentPath } = useRouter();
-
+  const { t } = useTranslation();
   return (
     <DefaultLayout>
       <div className="flex h-full w-full flex-col items-center justify-center gap-y-5 bg-custom-background-100 text-center">
@@ -32,29 +32,29 @@ export const NotAuthorizedView: React.FC<Props> = ({ actionButton, type }) => {
           />
         </div>
         <h1 className="text-xl font-medium text-custom-text-100">
-          Oops! You are not authorized to view this page
+          {t("components.auth-screens.not-authorized-view-this-page")}
         </h1>
 
         <div className="w-full max-w-md text-base text-custom-text-200">
           {user ? (
             <p>
-              You have signed in as {user.email}. <br />
+              {t("components.auth-screens.signed-in-as")} {user.email}. <br />
               <Link
                 href={`/?next=${currentPath}`}
                 className="font-medium text-custom-text-100">
-                Sign in
+                {t("sign-in")}
               </Link>{" "}
-              with different account that has access to this page.
+              {t("components.auth-screens.with-different-account-has-access-to-page")}
             </p>
           ) : (
             <p>
-              You need to{" "}
+              {t("components.auth-screens.you-need-to")}{" "}
               <Link
                 href={`/?next=${currentPath}`}
                 className="font-medium text-custom-text-100">
-                Sign in
+                {t("sign-in")}
               </Link>{" "}
-              with an account that has access to this page.
+              {t("components.auth-screens.with-account-has-access-to-this-page")}
             </p>
           )}
         </div>

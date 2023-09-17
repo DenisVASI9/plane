@@ -135,11 +135,11 @@ const ProjectCycles: NextPage = () => {
         <div className="h-full grid place-items-center">
           <EmptyState
             title={t("projects.cycles.plan-project-with-cycles")}
-            description="Cycle is a custom time period in which a team works to complete items on their backlog."
+            description={t("projects.cycles.cycle-is-custom-time-period")}
             image={emptyCycle}
             primaryButton={{
               icon: <PlusIcon className="h-4 w-4" />,
-              text: "New Cycle",
+              text: t("projects.cycles.new-cycle"),
               onClick: () => {
                 const e = new KeyboardEvent("keydown", {
                   key: "q",

@@ -38,6 +38,12 @@ export const getStaticProps: GetStaticProps = async (context) => ({
     },
 });
 
+export async function getStaticPaths() {
+    return {
+        paths: [],
+        fallback: 'blocking',
+    };
+}
 const ProjectsPage: NextPage = () => {
   // router
   const router = useRouter();
@@ -67,7 +73,7 @@ const ProjectsPage: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem
-            title={`${truncateText(activeWorkspace?.name ?? "Workspace", 32)} Projects`}
+            title={`${truncateText(activeWorkspace?.name ?? t("workspace"), 32)} ${t("projects")}`}
             unshrinkTitle={false}
           />
         </Breadcrumbs>
@@ -153,7 +159,7 @@ const ProjectsPage: NextPage = () => {
               description="Get started by creating your first project"
               primaryButton={{
                 icon: <PlusIcon className="h-4 w-4" />,
-                text: "New Project",
+                text: t("new-project"),
                 onClick: () => {
                   const e = new KeyboardEvent("keydown", {
                     key: "p",

@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 // headless ui
@@ -68,7 +68,7 @@ export const IssuesFilterView: React.FC = () => {
   const { workspaceSlug, projectId, viewId } = router.query;
   const isArchivedIssues = router.pathname.includes("archived-issues");
   const isDraftIssues = router.pathname.includes("draft-issues");
-
+  const { t } = useTranslation();
   const {
     displayFilters,
     setDisplayFilters,
@@ -93,7 +93,7 @@ export const IssuesFilterView: React.FC = () => {
             <Tooltip
               key={option.type}
               tooltipContent={
-                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} View</span>
+                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} {t("view")}</span>
               }
               position="bottom"
             >
@@ -123,7 +123,7 @@ export const IssuesFilterView: React.FC = () => {
             <Tooltip
               key={option.type}
               tooltipContent={
-                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} View</span>
+                <span className="capitalize">{replaceUnderscoreIfSnakeCase(option.type)} {t("view")}</span>
               }
               position="bottom"
             >
@@ -212,7 +212,7 @@ export const IssuesFilterView: React.FC = () => {
                       displayFilters.layout !== "spreadsheet" &&
                       displayFilters.layout !== "gantt_chart" && (
                         <div className="flex items-center justify-between">
-                          <h4 className="text-custom-text-200">Group by</h4>
+                          <h4 className="text-custom-text-200">{t("components.core.filters.group-by")}</h4>
                           <div className="w-28">
                             <CustomMenu
                               label={
@@ -244,7 +244,7 @@ export const IssuesFilterView: React.FC = () => {
                     {displayFilters.layout !== "calendar" &&
                       displayFilters.layout !== "spreadsheet" && (
                         <div className="flex items-center justify-between">
-                          <h4 className="text-custom-text-200">Order by</h4>
+                          <h4 className="text-custom-text-200">{t("components.core.filters.order-by")}</h4>
                           <div className="w-28">
                             <CustomMenu
                               label={
@@ -273,7 +273,7 @@ export const IssuesFilterView: React.FC = () => {
                         </div>
                       )}
                     <div className="flex items-center justify-between">
-                      <h4 className="text-custom-text-200">Issue type</h4>
+                      <h4 className="text-custom-text-200">{t("components.core.filters.issue-type")}</h4>
                       <div className="w-28">
                         <CustomMenu
                           label={
@@ -303,7 +303,7 @@ export const IssuesFilterView: React.FC = () => {
                     {displayFilters.layout !== "calendar" &&
                       displayFilters.layout !== "spreadsheet" && (
                         <div className="flex items-center justify-between">
-                          <h4 className="text-custom-text-200">Show sub-issues</h4>
+                          <h4 className="text-custom-text-200">{t("components.core.filters.show-sub-issues")}</h4>
                           <div className="w-28">
                             <ToggleSwitch
                               value={displayFilters.sub_issue ?? true}
@@ -318,7 +318,7 @@ export const IssuesFilterView: React.FC = () => {
                       displayFilters.layout !== "spreadsheet" &&
                       displayFilters.layout !== "gantt_chart" && (
                         <div className="flex items-center justify-between">
-                          <h4 className="text-custom-text-200">Show empty states</h4>
+                          <h4 className="text-custom-text-200">{t("components.core.filters.show-empty-states")}</h4>
                           <div className="w-28">
                             <ToggleSwitch
                               value={displayFilters.show_empty_groups ?? true}
@@ -336,14 +336,14 @@ export const IssuesFilterView: React.FC = () => {
                       displayFilters.layout !== "gantt_chart" && (
                         <div className="relative flex justify-end gap-x-3">
                           <button type="button" onClick={() => resetFilterToDefault()}>
-                            Reset to default
+                            {t("components.core.filters.reset-to-default")}
                           </button>
                           <button
                             type="button"
                             className="font-medium text-custom-primary"
                             onClick={() => setNewFilterDefaultView()}
                           >
-                            Set as default
+                            {t("components.core.filters.set-as-default")}
                           </button>
                         </div>
                       )}
@@ -351,7 +351,7 @@ export const IssuesFilterView: React.FC = () => {
 
                   {displayFilters.layout !== "gantt_chart" && (
                     <div className="space-y-2 py-3">
-                      <h4 className="text-sm text-custom-text-200">Display Properties</h4>
+                      <h4 className="text-sm text-custom-text-200">{t("components.core.filters.display-properties")}</h4>
                       <div className="flex flex-wrap items-center gap-2 text-custom-text-200">
                         {Object.keys(properties).map((key) => {
                           if (key === "estimate" && !isEstimateActive) return null;

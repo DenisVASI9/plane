@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-
+import {useTranslation} from 'next-i18next';
 import NextImage from "next/image";
 import { useRouter } from "next/router";
 
@@ -33,7 +33,7 @@ export const ImageUploadModal: React.FC<Props> = ({
 }) => {
   const [image, setImage] = useState<File | null>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
-
+  const { t } = useTranslation();
   const router = useRouter();
   const { workspaceSlug } = router.query;
 
@@ -128,7 +128,7 @@ export const ImageUploadModal: React.FC<Props> = ({
                     as="h3"
                     className="text-lg font-medium leading-6 text-custom-text-100"
                   >
-                    Upload Image
+                    {t("components.core.modals.upload-image")}
                   </Dialog.Title>
                   <div className="space-y-3">
                     <div className="flex items-center justify-center gap-3">
@@ -146,7 +146,7 @@ export const ImageUploadModal: React.FC<Props> = ({
                               type="button"
                               className="absolute top-0 right-0 z-40 translate-x-1/2 -translate-y-1/2 rounded bg-custom-background-90 px-2 py-0.5 text-xs font-medium text-custom-text-200"
                             >
-                              Edit
+                              {t("edit")}
                             </button>
                             <NextImage
                               layout="fill"
@@ -161,8 +161,8 @@ export const ImageUploadModal: React.FC<Props> = ({
                             <UserCircleIcon className="mx-auto h-16 w-16 text-custom-text-200" />
                             <span className="mt-2 block text-sm font-medium text-custom-text-200">
                               {isDragActive
-                                ? "Drop image here to upload"
-                                : "Drag & drop image here"}
+                                ? t("components.core.modals.drop-image-here")
+                                : t("components.core.modals.drag-drop-image-here")}
                             </span>
                           </div>
                         )}
@@ -189,7 +189,7 @@ export const ImageUploadModal: React.FC<Props> = ({
                     disabled={!image}
                     loading={isImageUploading}
                   >
-                    {isImageUploading ? "Uploading..." : "Upload & Save"}
+                    {isImageUploading ? t("uploading") : t("components.core.modals.upload-save")}
                   </PrimaryButton>
                 </div>
               </Dialog.Panel>

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-
+import {useTranslation} from 'next-i18next';
 // react-hook-form
 import { Controller, useForm } from "react-hook-form";
 // react-datepicker
@@ -48,7 +48,7 @@ export const DateFilterModal: React.FC<Props> = ({
   const { handleSubmit, watch, control } = useForm<TFormValues>({
     defaultValues,
   });
-
+  const { t } = useTranslation();
   const handleFormSubmit = (formData: TFormValues) => {
     const { filterType, date1, date2 } = formData;
 
@@ -163,14 +163,14 @@ export const DateFilterModal: React.FC<Props> = ({
                   )}
                   <div className="flex justify-end gap-4">
                     <SecondaryButton className="flex items-center gap-2" onClick={handleClose}>
-                      Cancel
+                      {t("cancel")}
                     </SecondaryButton>
                     <PrimaryButton
                       type="submit"
                       className="flex items-center gap-2"
                       disabled={isInvalid}
                     >
-                      Apply
+                      {t("apply")}
                     </PrimaryButton>
                   </div>
                 </form>

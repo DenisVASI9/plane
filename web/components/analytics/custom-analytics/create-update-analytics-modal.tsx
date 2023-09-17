@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 // react-hook-form
@@ -35,7 +35,7 @@ const defaultValues: FormValues = {
 export const CreateUpdateAnalyticsModal: React.FC<Props> = ({ isOpen, handleClose, params }) => {
   const router = useRouter();
   const { workspaceSlug } = router.query;
-
+  const { t } = useTranslation();
   const { setToastAlert } = useToast();
 
   const {
@@ -71,16 +71,16 @@ export const CreateUpdateAnalyticsModal: React.FC<Props> = ({ isOpen, handleClos
       .then(() => {
         setToastAlert({
           type: "success",
-          title: "Success!",
-          message: "Analytics saved successfully.",
+          title: t("success"),
+          message: t("components.analytics.analytics-saved-successfully"),
         });
         onClose();
       })
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Analytics could not be saved. Please try again.",
+          title: t("error"),
+          message: t("components.analytics.analytics-not-saved"),
         })
       );
   };
@@ -118,7 +118,7 @@ export const CreateUpdateAnalyticsModal: React.FC<Props> = ({ isOpen, handleClos
                       as="h3"
                       className="text-lg font-medium leading-6 text-custom-text-100"
                     >
-                      Save Analytics
+                      {t("components.analytics.save-analytics")}
                     </Dialog.Title>
                     <div className="mt-5">
                       <Input
@@ -131,7 +131,7 @@ export const CreateUpdateAnalyticsModal: React.FC<Props> = ({ isOpen, handleClos
                         register={register}
                         width="full"
                         validations={{
-                          required: "Title is required",
+                          required: t("components.analytics.title-is-required"),
                         }}
                       />
                       <TextArea
@@ -147,7 +147,7 @@ export const CreateUpdateAnalyticsModal: React.FC<Props> = ({ isOpen, handleClos
                   <div className="mt-5 flex justify-end gap-2">
                     <SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
                     <PrimaryButton type="submit" loading={isSubmitting}>
-                      {isSubmitting ? "Saving..." : "Save Analytics"}
+                      {isSubmitting ? t("components.analytics.saving") : t("components.analytics.save-analytics")}
                     </PrimaryButton>
                   </div>
                 </form>

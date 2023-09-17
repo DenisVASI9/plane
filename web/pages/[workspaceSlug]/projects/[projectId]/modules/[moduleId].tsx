@@ -109,8 +109,8 @@ const SingleModule: React.FC = () => {
       .catch(() =>
         setToastAlert({
           type: "error",
-          title: "Error!",
-          message: "Selected issues could not be added to the module. Please try again.",
+          title: t("error"),
+          message: t("projects.issue.issues-could-not-be-added"),
         })
       );
   };
@@ -131,7 +131,7 @@ const SingleModule: React.FC = () => {
         breadcrumbs={
           <Breadcrumbs>
             <BreadcrumbItem
-              title={`${truncateText(moduleDetails?.project_detail.name ?? "Project", 32)} Modules`}
+              title={`${truncateText(moduleDetails?.project_detail.name ?? t("project"), 32)} ${t("modules")}`}
               link={`/${workspaceSlug}/projects/${projectId}/modules`}
               linkTruncate
             />
@@ -167,7 +167,7 @@ const SingleModule: React.FC = () => {
               className="!py-1.5 font-normal rounded-md text-custom-text-200 hover:text-custom-text-100"
               outline
             >
-              Analytics
+                {t("analytics")}
             </SecondaryButton>
             <button
               type="button"
@@ -184,10 +184,10 @@ const SingleModule: React.FC = () => {
         {error ? (
           <EmptyState
             image={emptyModule}
-            title="Module does not exist"
-            description="The module you are looking for does not exist or has been deleted."
+            title={t("projects.modules.module-not-exist")}
+            description={t("projects.modules.module-does-not-exist")}
             primaryButton={{
-              text: "View other modules",
+              text: t("projects.modules.view-other-modules"),
               onClick: () => router.push(`/${workspaceSlug}/projects/${projectId}/modules`),
             }}
           />

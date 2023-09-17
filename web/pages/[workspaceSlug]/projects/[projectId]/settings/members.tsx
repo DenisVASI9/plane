@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -74,7 +74,7 @@ const MembersSettings: NextPage = () => {
   const [inviteModal, setInviteModal] = useState(false);
   const [selectedRemoveMember, setSelectedRemoveMember] = useState<string | null>(null);
   const [selectedInviteRemoveMember, setSelectedInviteRemoveMember] = useState<string | null>(null);
-
+  const { t } = useTranslation();
   const { setToastAlert } = useToast();
 
   const router = useRouter();
@@ -177,9 +177,9 @@ const MembersSettings: NextPage = () => {
         );
 
         setToastAlert({
-          title: "Success",
+          title: t("success"),
           type: "success",
-          message: "Project updated successfully",
+          message: t("projects.settings.project-updated-successfully"),
         });
       })
       .catch((err) => {
@@ -217,9 +217,9 @@ const MembersSettings: NextPage = () => {
         );
 
         setToastAlert({
-          title: "Success",
+          title: t("success"),
           type: "success",
-          message: "Project updated successfully",
+          message: t("projects.settings.project-updated-successfully"),
         });
       })
       .catch((err) => {
@@ -232,7 +232,7 @@ const MembersSettings: NextPage = () => {
       breadcrumbs={
         <Breadcrumbs>
           <BreadcrumbItem
-            title={`${truncateText(projectDetails?.name ?? "Project", 32)}`}
+            title={`${truncateText(projectDetails?.name ?? t("project"), 32)}`}
             link={`/${workspaceSlug}/projects/${projectDetails?.id}/issues`}
             linkTruncate
           />
@@ -276,8 +276,8 @@ const MembersSettings: NextPage = () => {
           }
           setToastAlert({
             type: "success",
-            message: "Member removed successfully",
-            title: "Success",
+            message: t("projects.settings.member-removed-successfully"),
+            title: t("success"),
           });
         }}
       />
@@ -294,12 +294,12 @@ const MembersSettings: NextPage = () => {
         </div>
         <section className="pr-9 py-8 w-full">
           <div className="flex items-center py-3.5 border-b border-custom-border-200">
-            <h3 className="text-xl font-medium">Defaults</h3>
+            <h3 className="text-xl font-medium">{t("projects.settings.defaults")}</h3>
           </div>
           <div className="flex flex-col gap-2 pb-4 w-full">
             <div className="flex items-center py-8 gap-4 w-full">
               <div className="flex flex-col gap-2 w-1/2">
-                <h4 className="text-sm">Project Lead</h4>
+                <h4 className="text-sm">{t("projects.settings.project-lead")}</h4>
                 <div className="">
                   {projectDetails ? (
                     <Controller
@@ -323,7 +323,7 @@ const MembersSettings: NextPage = () => {
               </div>
 
               <div className="flex flex-col gap-2 w-1/2">
-                <h4 className="text-sm">Default Assignee</h4>
+                <h4 className="text-sm">{t("projects.settings.default-assignee")}</h4>
                 <div className="">
                   {projectDetails ? (
                     <Controller
@@ -349,7 +349,7 @@ const MembersSettings: NextPage = () => {
           </div>
 
           <div className="flex items-center justify-between gap-4 py-3.5 border-b border-custom-border-200">
-            <h4 className="text-xl font-medium border-b border-custom-border-100">Members</h4>
+            <h4 className="text-xl font-medium border-b border-custom-border-100">{t("members")}</h4>
             <PrimaryButton onClick={() => setInviteModal(true)}>Add Member</PrimaryButton>
           </div>
           {!projectMembers || !projectInvitations ? (
@@ -408,7 +408,7 @@ const MembersSettings: NextPage = () => {
                       <div className="flex items-center gap-2 text-xs">
                         {!member.member && (
                           <div className="mr-2 flex items-center justify-center rounded-full bg-yellow-500/20 px-2 py-1 text-center text-xs text-yellow-500">
-                            Pending
+                            {t("pending")}
                           </div>
                         )}
                         <CustomSelect
@@ -450,9 +450,8 @@ const MembersSettings: NextPage = () => {
                               .catch(() => {
                                 setToastAlert({
                                   type: "error",
-                                  title: "Error!",
-                                  message:
-                                    "An error occurred while updating member role. Please try again.",
+                                  title: t("error"),
+                                  message:t("projects.settings.error-while-updating-member-role"),
                                 });
                               });
                           }}
@@ -492,7 +491,7 @@ const MembersSettings: NextPage = () => {
 
                               <span>
                                 {" "}
-                                {member.memberId !== user?.id ? "Remove member" : "Leave project"}
+                                {member.memberId !== user?.id ? t("projects.settings.remove-member") : t("projects.settings.leave-project")}
                               </span>
                             </span>
                           </CustomMenu.MenuItem>

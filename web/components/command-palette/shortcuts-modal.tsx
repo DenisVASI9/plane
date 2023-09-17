@@ -7,7 +7,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { CommandIcon } from "components/icons";
 // ui
 import { Input } from "components/ui";
-
+import {useTranslation} from 'next-i18next';
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,7 +56,7 @@ export const ShortcutsModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   useEffect(() => {
     if (!isOpen) setQuery("");
   }, [isOpen]);
-
+  const { t } = useTranslation();
   return (
     <Transition.Root show={isOpen} as={React.Fragment}>
       <Dialog as="div" className="relative z-20" onClose={setIsOpen}>
@@ -91,7 +91,7 @@ export const ShortcutsModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
                         as="h3"
                         className="flex justify-between text-lg font-medium leading-6 text-custom-text-100"
                       >
-                        <span>Keyboard Shortcuts</span>
+                        <span>{t("components.command-palette.keyboard-shortcuts")}</span>
                         <span>
                           <button type="button" onClick={() => setIsOpen(false)}>
                             <XMarkIcon
@@ -150,7 +150,7 @@ export const ShortcutsModal: React.FC<Props> = ({ isOpen, setIsOpen }) => {
                           ) : (
                             <div className="flex flex-col gap-y-3">
                               <p className="text-sm text-custom-text-200">
-                                No shortcuts found for{" "}
+                                {t("components.command-palette.no-shortcuts-found-for")}{" "}
                                 <span className="font-semibold italic">
                                   {`"`}
                                   {query}

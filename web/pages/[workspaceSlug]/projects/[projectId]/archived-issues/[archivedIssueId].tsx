@@ -151,7 +151,7 @@ const ArchivedIssueDetailsPage: NextPage = () => {
         setToastAlert({
           type: "error",
           title: t("error"),
-          message: t("projects.archived-issue.something-wrong"),
+          message: t("something-went-wrong"),
         });
       })
       .finally(() => setIsRestoring(false));

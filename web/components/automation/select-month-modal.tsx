@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useTranslation} from 'next-i18next';
 import { useRouter } from "next/router";
 
 // react-hook-form
@@ -29,7 +29,7 @@ export const SelectMonthModal: React.FC<Props> = ({
 }) => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
-
+  const { t } = useTranslation();
   const {
     register,
     formState: { errors, isSubmitting },
@@ -61,7 +61,7 @@ export const SelectMonthModal: React.FC<Props> = ({
         register={register}
         width="full"
         validations={{
-          required: "Select a month between 1 and 12.",
+          required: t("components.automation.select-a-month-between"),
           min: 1,
           max: 12,
         }}
@@ -104,7 +104,7 @@ export const SelectMonthModal: React.FC<Props> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-custom-text-100"
                     >
-                      Customise Time Range
+                      {t("components.automation.customise-time-range")}
                     </Dialog.Title>
                     <div className="mt-8 flex items-center gap-2">
                       <div className="flex w-full flex-col gap-1 justify-center">
@@ -113,7 +113,7 @@ export const SelectMonthModal: React.FC<Props> = ({
                             {inputSection("close_in")}
                             {errors.close_in && (
                               <span className="text-sm px-1 text-red-500">
-                                Select a month between 1 and 12.
+                                {t("components.automation.select-a-month-between")}
                               </span>
                             )}
                           </>
@@ -122,7 +122,7 @@ export const SelectMonthModal: React.FC<Props> = ({
                             {inputSection("archive_in")}
                             {errors.archive_in && (
                               <span className="text-sm px-1 text-red-500">
-                                Select a month between 1 and 12.
+                                {t("components.automation.select-a-month-between")}
                               </span>
                             )}
                           </>
@@ -131,9 +131,9 @@ export const SelectMonthModal: React.FC<Props> = ({
                     </div>
                   </div>
                   <div className="mt-5 flex justify-end gap-2">
-                    <SecondaryButton onClick={onClose}>Cancel</SecondaryButton>
+                    <SecondaryButton onClick={onClose}>{t("cancel")}</SecondaryButton>
                     <PrimaryButton type="submit" loading={isSubmitting}>
-                      {isSubmitting ? "Submitting..." : "Submit"}
+                      {isSubmitting ? t("components.automation.submitting") : t("components.automation.submit")}
                     </PrimaryButton>
                   </div>
                 </form>

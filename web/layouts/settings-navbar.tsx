@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import {useTranslation} from 'next-i18next';
 type Props = {
   profilePage?: boolean;
 };
@@ -8,34 +8,42 @@ type Props = {
 const SettingsNavbar: React.FC<Props> = ({ profilePage = false }) => {
   const router = useRouter();
   const { workspaceSlug, projectId } = router.query;
-
+  const { t } = useTranslation();
   const workspaceLinks: Array<{
     label: string;
     href: string;
   }> = [
     {
-      label: "General",
+      label: t("general"),
       href: `/${workspaceSlug}/settings`,
     },
     {
-      label: "Members",
+      label: t("members"),
       href: `/${workspaceSlug}/settings/members`,
     },
     {
-      label: "Billing & Plans",
-      href: `/${workspaceSlug}/settings/billing`,
+      label: t("reatures"),
+      href: `/${workspaceSlug}/settings/features`,
     },
     {
-      label: "Integrations",
+      label: t("states"),
+      href: `/${workspaceSlug}/settings/states`,
+    },
+    {
+      label: t("labels"),
+      href: `/${workspaceSlug}/settings/labels`,
+    },
+    {
+      label: t("integrations"),
       href: `/${workspaceSlug}/settings/integrations`,
     },
     {
-      label: "Imports",
-      href: `/${workspaceSlug}/settings/imports`,
+      label: t("estimates"),
+      href: `/${workspaceSlug}/settings/estimates`,
     },
     {
-      label: "Exports",
-      href: `/${workspaceSlug}/settings/exports`,
+      label: t("automations"),
+      href: `/${workspaceSlug}/settings/automations`,
     },
   ];
 
@@ -44,39 +52,35 @@ const SettingsNavbar: React.FC<Props> = ({ profilePage = false }) => {
     href: string;
   }> = [
     {
-      label: "General",
+      label: t("general"),
       href: `/${workspaceSlug}/projects/${projectId}/settings`,
     },
     {
-      label: "Control",
-      href: `/${workspaceSlug}/projects/${projectId}/settings/control`,
-    },
-    {
-      label: "Members",
+      label: t("members"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/members`,
     },
     {
-      label: "Features",
+      label: t("reatures"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/features`,
     },
     {
-      label: "States",
+      label: t("states"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/states`,
     },
     {
-      label: "Labels",
+      label: t("labels"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/labels`,
     },
     {
-      label: "Integrations",
+      label: t("integrations"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/integrations`,
     },
     {
-      label: "Estimates",
+      label: t("estimates"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/estimates`,
     },
     {
-      label: "Automations",
+      label: t("automations"),
       href: `/${workspaceSlug}/projects/${projectId}/settings/automations`,
     },
   ];
@@ -86,15 +90,15 @@ const SettingsNavbar: React.FC<Props> = ({ profilePage = false }) => {
     href: string;
   }> = [
     {
-      label: "General",
+      label: t("general"),
       href: `/${workspaceSlug}/me/profile`,
     },
     {
-      label: "Activity",
+      label: t("activity"),
       href: `/${workspaceSlug}/me/profile/activity`,
     },
     {
-      label: "Preferences",
+      label: t("preferences"),
       href: `/${workspaceSlug}/me/profile/preferences`,
     },
   ];
